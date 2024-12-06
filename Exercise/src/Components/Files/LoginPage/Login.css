@@ -1,0 +1,184 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Raleway', sans-serif;
+}
+
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes inputFocus {
+    0% {
+        border-bottom-color: #6A679E;
+    }
+    50% {
+        border-bottom-color: #9c8ee0;
+    }
+    100% {
+        border-bottom-color: #6A679E;
+    }
+}
+
+@keyframes buttonHover {
+    0% {
+        transform: scale(1);
+        box-shadow: 0px 2px 2px #5C5696;
+    }
+    50% {
+        transform: scale(1.03);
+        box-shadow: 0px 4px 6px #5C5696;
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0px 2px 2px #5C5696;
+    }
+}
+
+.bodies {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.bodies > form {
+    background: linear-gradient(135deg, #8860D0, #9775E3, #A68BE6);
+    position: relative;
+    height: 600px;
+    width: 360px;
+    box-shadow: 0px 0px 30px rgba(92, 86, 150, 0.6);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.bodies > form:hover {
+    transform: scale(1.02);
+}
+
+.bodies > form > div {
+    padding: 60px 30px 30px;
+    position: relative;
+    z-index: 1;
+}
+
+.main {
+    color: white;
+    text-align: center;
+    font-size: 26px;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    letter-spacing: 1px;
+}
+
+.ques {
+    color: rgba(255,255,255,0.8);
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 300;
+}
+
+.name input,
+.email input,
+.pass input {
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid rgba(209, 209, 212, 0.7);
+    background-color: transparent;
+    padding: 10px;
+    color: white;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.name input:active, 
+.name input:focus, 
+.name input:hover,
+.email input:active, 
+.email input:focus, 
+.email input:hover,
+.pass input:active, 
+.pass input:focus, 
+.pass input:hover {
+    outline: none;
+    border-bottom-color: #6A679E;
+    animation: inputFocus 1.5s infinite;
+}
+
+.btn1 {
+    background: linear-gradient(to right, #fff, #f0f0f0);
+    font-size: 14px;
+    margin-top: 30px;
+    padding: 16px 20px;
+    border-radius: 26px;
+    border: 1px solid #D4D3E8;
+    text-transform: uppercase;
+    font-weight: 700;
+    width: 100%;
+    color: #4C489D;
+    box-shadow: 0px 2px 2px #5C5696;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn1:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: all 0.6s;
+}
+
+.btn1:hover:before {
+    left: 100%;
+}
+
+.btn1:active, 
+.btn1:focus, 
+.btn1:hover {
+    border-color: #6A679E;
+    outline: none;
+    animation: buttonHover 0.6s;
+}
+
+.bodies > form > div > p {
+    color: white;
+    text-align: center;
+    margin-top: 15px;
+    font-weight: 300;
+}
+
+.log, 
+.create {
+    color: #6A679E;
+    margin-left: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    text-decoration: none;
+}
+
+.log:hover,
+.create:hover {
+    color: #8A7FC3;
+    text-decoration: underline;
+}
