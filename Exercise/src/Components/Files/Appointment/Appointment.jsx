@@ -3,9 +3,7 @@ import { useParams } from "react-router-dom";
 import { AContext } from "../Context/AppContext";
 import './Appointment.css';
 import {useNavigate} from 'react-router-dom'
-// import Relatedtutors from "../RelatedTutors/Relatedtutors";
 
-// import Relatedtutors from "./Components/Files/RelatedTutors/Relatedtutors";
 const Appointment = () => {
   const navigate=useNavigate();
    const { TutorId } = useParams();
@@ -156,7 +154,6 @@ const Appointment = () => {
        <button onClick={()=>
         navigate("/MyAppointment")
        } />
-       {/* <Relatedtutors TutorId={TutorId} speciality={info.speciality} /> */}
      </div>
    );
 };
