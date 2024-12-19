@@ -69,23 +69,42 @@ const loginUser = async (req, res) => {
         res.json({ success: false, message: error.message });
     }
 }
+// const getProfile = async (req, res) => {
+//     try {
+//         console.log("Headers:", req.headers);
+
+//         const token = req.headers.authorization?.split(" ")[1];
+//         console.log("Extracted Token:", token);
+
+//         if (!token) {
+//             return res.status(401).json({ success: false, message: "Login again: Token missing" });
+//         }
+
+//         const secretKey = process.env.JWT_SECRET || 'default_secret_key';
+//         const decoded = jwt.verify(token, secretKey);
+
+//         console.log("Decoded Token:", decoded);
+
+//         const userId = decoded.id;
+//         const userData = await UserModel.findById(userId).select('-password');
+
+//         if (!userData) {
+//             return res.json({ success: false, message: "User not found" });
+//         }
+
+//         res.json({ success: true, userData });
+//     } catch (error) {
+//         console.log(error)
+//         res.json({success:false,message:error.message})
+//     }
+// };
+
+
+
 const getProfile = async (req, res) => {
     try {
-        console.log("Headers:", req.headers);
-
-        const token = req.headers.authorization?.split(" ")[1];
-        console.log("Extracted Token:", token);
-
-        if (!token) {
-            return res.status(401).json({ success: false, message: "Login again: Token missing" });
-        }
-
-        const secretKey = process.env.JWT_SECRET || 'default_secret_key';
-        const decoded = jwt.verify(token, secretKey);
-
-        console.log("Decoded Token:", decoded);
-
-        const userId = decoded.id;
+        // No need to extract and verify token again
+        const userId = req.user.id;  // Access the user info directly from req.user
         const userData = await UserModel.findById(userId).select('-password');
 
         if (!userData) {
@@ -95,9 +114,10 @@ const getProfile = async (req, res) => {
         res.json({ success: true, userData });
     } catch (error) {
         console.log(error)
-        res.json({success:false,message:error.message})
+        res.json({ success: false, message: error.message });
     }
 };
+
 const updateProfile = async (req, res) => {
     try {
         const { userId, name, phone, dob, gender } = req.body;

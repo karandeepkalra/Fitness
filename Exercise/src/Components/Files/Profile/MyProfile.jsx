@@ -1,64 +1,74 @@
-import React, { useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
+import { AContext } from '../Context/AppContext';
 import './myprofile.css';
+
 const MyProfile = () => {
+  const { userData, setUserData } = useContext(AContext); // Using userData from context
   const [isEditing, setIsEditing] = useState(false);
-  const [profile, setProfile] = useState({
-    name: 'John Doe',
-    email: 'test@gmail.com',
-    phone: '0000000000',
-    address: {
-      line1: 'AECS Layout',
-      line2: 'Whitefield, BLR, KA'
-    },
-    gender: 'Male',
-    birthday: '1993-01-01'
+  const [editedProfile, setEditedProfile] = useState({
+    email: '',
+    phone: '',
+    gender: '',
+    birthday: '',
+    name: '..',
   });
 
-  const [editedProfile, setEditedProfile] = useState(profile);
+  // Update the editedProfile whenever userData changes
+  useEffect(() => {
+    if (userData) {
+      setEditedProfile({
+        email: userData.email || '',
+        phone: userData.phone || '',
+        gender: userData.gender || '',
+        birthday: userData.dob || '',
+        name: userData.name || '',
+      });
+    }
+  }, [userData]); // Run this effect whenever userData changes
 
   const handleEdit = () => {
     setIsEditing(true);
-    setEditedProfile(profile);
+    setEditedProfile({
+      ...userData, // Populate with current userData
+    });
   };
 
   const handleSave = () => {
-    setProfile(editedProfile);
+    setUserData(editedProfile); // Update context with the new profile data
+    localStorage.setItem('userData', JSON.stringify(editedProfile)); // Save to localStorage
     setIsEditing(false);
   };
 
   const handleCancel = () => {
     setIsEditing(false);
-    setEditedProfile(profile);
+    setEditedProfile({
+      ...userData, // Reset to original data on cancel
+    });
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name.includes('.')) {
-      const [parent, child] = name.split('.');
-      setEditedProfile(prev => ({
-        ...prev,
-        [parent]: {
-          ...prev[parent],
-          [child]: value
-        }
-      }));
-    } else {
-      setEditedProfile(prev => ({
-        ...prev,
-        [name]: value
-      }));
-    }
+    setEditedProfile((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
-  return (
+  return userData ? (
     <div className="profile-container">
       <div className="profile-content">
-      <div class="profile-header">
-         <div class="profile-img-container">
-            <div class="profile-img"></div>
-            <h2>John Doe</h2>
-          </div>
-      </div>
+        <h2>
+          {isEditing ? (
+            <input
+              type="text"
+              name="name"
+              value={editedProfile.name}
+              onChange={handleChange}
+            />
+          ) : (
+            editedProfile.name
+          )}
+        </h2>
         <div className="profile-section">
           <h3>CONTACT INFORMATION</h3>
           <div className="profile-details">
@@ -82,36 +92,16 @@ const MyProfile = () => {
                     onChange={handleChange}
                   />
                 </div>
-                <div className="profile-field">
-                  <label>Address:</label>
-                  <input
-                    type="text"
-                    name="address.line1"
-                    value={editedProfile.address.line1}
-                    onChange={handleChange}
-                  />
-                  <input
-                    type="text"
-                    name="address.line2"
-                    value={editedProfile.address.line2}
-                    onChange={handleChange}
-                  />
-                </div>
               </>
             ) : (
               <>
                 <div className="profile-field">
                   <label>Email Id:</label>
-                  <span>{profile.email}</span>
+                  <span>{editedProfile.email || 'N/A'}</span>
                 </div>
                 <div className="profile-field">
                   <label>Phone:</label>
-                  <span>{profile.phone}</span>
-                </div>
-                <div className="profile-field">
-                  <label>Address:</label>
-                  <span>{profile.address.line1}</span>
-                  <span>{profile.address.line2}</span>
+                  <span>{editedProfile.phone || 'N/A'}</span>
                 </div>
               </>
             )}
@@ -130,6 +120,7 @@ const MyProfile = () => {
                     value={editedProfile.gender}
                     onChange={handleChange}
                   >
+                    <option value="">Select</option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                     <option value="Other">Other</option>
@@ -149,11 +140,11 @@ const MyProfile = () => {
               <>
                 <div className="profile-field">
                   <label>Gender:</label>
-                  <span>{profile.gender}</span>
+                  <span>{editedProfile.gender || 'N/A'}</span>
                 </div>
                 <div className="profile-field">
                   <label>Birthday:</label>
-                  <span>{profile.birthday}</span>
+                  <span>{editedProfile.birthday || 'N/A'}</span>
                 </div>
               </>
             )}
@@ -163,15 +154,23 @@ const MyProfile = () => {
         <div className="profile-actions">
           {isEditing ? (
             <>
-              <button onClick={handleSave} className="save-btn">Save</button>
-              <button onClick={handleCancel} className="cancel-btn">Cancel</button>
+              <button onClick={handleSave} className="save-btn">
+                Save
+              </button>
+              <button onClick={handleCancel} className="cancel-btn">
+                Cancel
+              </button>
             </>
           ) : (
-            <button onClick={handleEdit} className="edit-btn">Edit</button>
+            <button onClick={handleEdit} className="edit-btn">
+              Edit
+            </button>
           )}
         </div>
       </div>
     </div>
+  ) : (
+    <div>Loading...</div>
   );
 };
 
