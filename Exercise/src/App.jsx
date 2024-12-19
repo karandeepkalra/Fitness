@@ -6,11 +6,14 @@ import Tutors from './Components/Files/Tutor/Tutors'
 import My_Appointment from './Components/Files/MyAppointment/My_Appointment'
 import Relatedtutor from "./Components/Files/RelatedTutors/Relatedtutors";
 import Login from "./Components/Files/LoginPage/Login";
-import MyProfile from "./Components/files/Profile/MyProfile"
+import MyProfile from "./Components/Files/Profile/MyProfile"
+import Navbars from "./Components/Files/Navbar/Navbar"
 const App = () => {
   return (
     <Router>
+      <Navbars />
       <Routes>
+      
       <Route path="/" element={<TopTutors />} />
         <Route path="/Home" element={<TopTutors />} />
         <Route path="/Tutors" element={<Tutors />} />
