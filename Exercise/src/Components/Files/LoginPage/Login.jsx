@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // import React, { useState,useContext } from 'react';
 // import { useNavigate } from 'react-router-dom';
 // import axios from 'axios';
@@ -683,6 +684,9 @@
 
 
 import React, { useState, useContext, useEffect } from 'react';
+=======
+import React, { useState } from 'react';
+>>>>>>> 2d37b2f5ae8e433d94f3a31f60d468b770a00aa2
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import validator from 'validator';

@@ -1,0 +1,110 @@
+.contact-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.contact-header {
+    text-align: center;
+    font-size: 2rem;
+    padding-top: 2.5rem;
+    color: #6b7280;
+    width: 100%;
+}
+
+.contact-us-highlight {
+    color: #374151;
+    font-weight: 600;
+}
+
+.contact-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2.5rem;
+    margin: 2.5rem 0;
+    margin-bottom: 7rem;
+    font-size: 0.875rem;
+    width: 100%;
+}
+
+.contact-image {
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.office-title,
+.careers-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #4b5563;
+    text-align: center;
+}
+
+.contact-address,
+.contact-details,
+.careers-description {
+    color: #4b5563;
+    text-align: center;
+}
+
+.explore-jobs-btn {
+    border: 1px solid black;
+    padding: 1rem 2rem;
+    font-size: 0.875rem;
+    transition: all 0.5s ease;
+    cursor: pointer;
+}
+
+.explore-jobs-btn:hover {
+    background-color: black;
+    color: white;
+}
+
+@media screen and (min-width: 800px) {
+    .contact-content {
+        flex-direction: row;
+        align-items: center;
+        gap: 3rem;
+    }
+
+    .contact-image {
+        width: 50%;
+    }
+
+    .contact-info {
+        width: 50%;
+        align-items: flex-start;
+    }
+
+    .office-title,
+    .careers-title,
+    .contact-address,
+    .contact-details,
+    .careers-description {
+        text-align: left;
+    }
+}
+
+@media screen and (max-width: 799px) {
+    .contact-header {
+        font-size: 1.5rem;
+    }
+}
