@@ -1,4 +1,4 @@
-import validator from 'validator'
+import validator from 'validator';
 import bcrypt from 'bcrypt';
 import UserModel from '../models/UserModel.js';
 import jwt from 'jsonwebtoken'
@@ -57,15 +57,21 @@ const loginUser = async (req, res) => {
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (isMatch) {
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (isMatch) {
             const secretKey = process.env.JWT_SECRET || 'default_secret_key';
             const token = jwt.sign({ id: user._id }, secretKey);
             res.json({ success: true, token });
         } else {
             res.json({ success: false, message: "Wrong username or password" });
         }
-    } catch (error) {
+    }
+    }
+     catch (error) {
         res.json({ success: false, message: error.message });
     }
+  
 }
 
 const getProfile = async (req, res) => {
