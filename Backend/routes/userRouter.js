@@ -1,37 +1,22 @@
 import express from 'express';
-import User from '../models/UserModel.js';
-import {addUser,loginUser} from '../controllers/UserController.js'
+import { addUser, loginUser,getProfile ,updateProfile} from '../controllers/UserController.js';
+import authUser from '../middlewares/authUser.js';
+// import upload from '../middlewares/multer.js';
 const router = express.Router();
 
-// GET: Fetch all user
-// router.get('/', async (req, res) => {
-//   try {
-//     const users = await User.find();
-//     res.status(200).json(users);
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ message: 'Failed to fetch users', error: err.message });
-//   }
-// });
+// Sign Up Route
+router.post('/', (req, res, next) => {
+    console.log("POST /user/ route hit");
+    next(); // Proceed to the actual controller
+}, addUser);
 
-// POST: Add a new user
-// router.post('/', async (req, res) => {
-//   try {
-//     const { name,email,password } = req.body; // Destructure request body
-//     if (!name || !email || !password) {
-//       return res.status(400).json({ message: 'All fields are required' });
-//     }
+// Login Route
+router.post('/login', (req, res, next) => {
+    console.log("POST /user/login route hit");
+    next(); // Proceed to the actual controller
+}, loginUser);
 
-//     const newuser = new User({ name,email,password});
-//     await newuser.save();
-//     res.status(201).json({ message: 'user created successfully', user:newuser });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ message: 'Failed to create users', error: err.message });
-//   }
-// });
+router.get('/get-profile',authUser,getProfile)
+router.post('/update-profile',authUser,updateProfile)
 
-
-router.post('/',addUser)
-router.post('/login',loginUser)
 export default router;
