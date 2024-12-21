@@ -4,6 +4,7 @@ import {v2 as cloudinary} from 'cloudinary'
 import TutorModel from "../models/TutorModel.js"
 import fs from 'fs'
 import mongoose from 'mongoose'
+import jwt from 'jsonwebtoken'
 
 const addTutor = async(req, res) => {
     try {
@@ -161,5 +162,26 @@ const addTutor = async(req, res) => {
     }
 };
 
+// api for admin login
+const loginAdmin= async (req,res)=>{
+    try{
+        const {email,password}= req.body
+        if(email==process.env.ADMIN_EMAIL && password==process.env.ADMIN_PASSWORD)
+        {
+             const token= jwt.sign(email+password, process.env.JWT_SECRET)
+             res.json({success:true,token})
+        }
+        else
+        {
+            res.josn({success:false,message:"Invalid credentials "})
+        }
+    }
+    catch(error)
+    {
+        console.log(error);
+        res.json({success:false, message:error.message})
+    }
+}
+
 // Export all controller functions
-export { addTutor };
+export { addTutor , loginAdmin};
