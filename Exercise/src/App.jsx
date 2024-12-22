@@ -10,8 +10,11 @@ import MyProfile from "./Components/Files/Profile/MyProfile"
 import Navbars from "./Components/Files/Navbar/Navbar"
 import Footer from "./Components/Files/Footer/Footer"
 import About from "./Components/Files/About/About"
+// import { AppContextProvider } from "./Components/Files/Context/AppContext";
+// import { AppContextProvider } from './Context/AppContext'; 
 const App = () => {
   return (
+    // <AppContextProvider>
     <Router>
       <Navbars />
       <Routes>
@@ -29,6 +32,7 @@ const App = () => {
       </Routes>
       <Footer />
     </Router>
+    // </AppContextProvider>
   );
 };
 
