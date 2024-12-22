@@ -12,7 +12,7 @@ const Login = () => {
     // Redirect if already logged in
     useEffect(() => {
         if (token) {
-            navigate("/Home");
+            navigate("/");
         }
     }, [token, navigate]);
 
