@@ -1,4 +1,4 @@
-.container {
+ /* .container {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     min-height: 100vh;
     padding: 2rem;
@@ -69,7 +69,7 @@
     padding: 5px 15px 15px;
     font-size: 0.9rem;
 }
-/* Classic Gradient Button */
+
 .btn1 {
     background: linear-gradient(to right, #667eea 0%, #764ba2 100%);
     color: white;
@@ -93,7 +93,6 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Alternative Style 1: Soft Pastel Gradient */
 .btn1-pastel {
     background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
     color: white;
@@ -111,7 +110,6 @@
     transform: scale(1.05);
 }
 
-/* Alternative Style 2: Outline Gradient */
 .btn1-outline {
     background: transparent;
     border: 2px solid transparent;
@@ -142,10 +140,9 @@
 }
 
 .btn1-outline:hover:before {
-    left: 0;
-}
+    left: 0; 
+} 
 
-/* Alternative Style 3: Glowing Gradient */
 .btn1-glow {
     background: linear-gradient(to right, #ff6b6b 0%, #556270 100%);
     color: white;
@@ -172,4 +169,121 @@
 
 .btn1-glow:hover:after {
     left: -100%;
-}
+} */
+
+.containerss {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .containerss h1 {
+    background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .containerss > p {
+    color: #6b7280;
+    text-align: center;
+    max-width: 600px;
+    margin-bottom: 2rem;
+  }
+  
+  /* Grid for Top Tutors */
+  .toptutors-gridss {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 cards per row */
+    gap: 20px; /* Spacing between cards */
+    width: 100%;
+    justify-items: center; /* Center cards horizontally */
+  }
+  
+  .tutor-cardss {
+    width: 100%;
+    max-width: 280px; /* Maximum width for each card */
+  }
+  
+  .contentss {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .contentss:hover {
+    transform: scale(1.05);
+  }
+  
+  .contentss img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  
+  .statusss {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: linear-gradient(to right, #48bb78, #2f855a);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+  }
+  
+  .contentss p:nth-child(3) {
+    font-weight: bold;
+    color: #2d3748;
+    padding: 10px 15px 0;
+  }
+  
+  .contentss p:nth-child(4) {
+    color: #718096;
+    padding: 5px 15px 15px;
+    font-size: 0.9rem;
+  }
+  
+  /* Button Styles */
+  .btn3 {
+    background: linear-gradient(to right, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .btn3:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(to right, #764ba2 0%, #667eea 100%);
+  }
+  
+  .btn3:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Responsive Layout for Smaller Screens */
+  @media (max-width: 768px) {
+    .toptutors-gridss {
+      grid-template-columns: repeat(2, 1fr); /* 2 cards per row */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .toptutors-gridss {
+      grid-template-columns: 1fr; /* 1 card per row */
+    }
+  }
