@@ -480,6 +480,9 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { data } from '../Data.js'; // Static tutor data
+import axios from 'axios'
+
+
 
 // Create Context
 export const AContext = createContext();
@@ -490,6 +493,9 @@ const AppContext = ({ children }) => {
     JSON.parse(localStorage.getItem('userData')) || null
   );
   const [loading, setLoading] = useState(false);
+
+  const [tutors,setTutors]= useState([])
+  const [tutorsdata,setTutorsdata]=  useState([])
 
   // Static tutor data from `data.js`
   const tutorsData = data; // Keep this to provide tutor data
@@ -541,6 +547,77 @@ const AppContext = ({ children }) => {
     }
   }, [token]);
 
+// latest written code
+  //  const getAllTutors = async ()=>{
+  //     try{
+  //           const {da} = await axios.post(backendURL + '/api/tutor/all-tutors', {})
+  //           if(da.success)
+  //           {
+  //             setTutors(da.tutors)
+  //             console.log(da.tutors)
+  //           }
+  //           else
+  //           {
+  //             toast.error(da.message)
+  //           }
+  //     }
+  //     catch(error)
+  //     {
+  //        toast.message(error.message)
+  //     }
+  //  }
+
+//   const getTutorsData = async ()=>{
+//     try{
+//        const {tutdata}= await axios.get(backendURL + '/api/tutor/list')
+//        if(tutdata.success)
+//        {
+//            setTutorsdata(tutdata.tutors)
+//        }
+//        else
+//        {
+//          toast.error(tutdata.message)
+//        }
+//     }
+//     catch(error){
+//        console.log(error)
+//        toast.error(error.message)
+//     }
+// }
+
+
+  const getAllTutors = async () => {
+    try {
+      const { data: res } = await axios.post(`${backendURL}/api/tutor/all-tutors`);
+      if (res.success) {
+        setTutors(res.tutors); // Update tutors state
+        console.log(res.tutors);
+      } else {
+        toast.error(res.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  const getTutorsData = async () => {
+    try {
+      const { data: res } = await axios.get(`${backendURL}/api/tutor/list`);
+      if (res.success) {
+        setTutorsdata(res.message); // Update tutorsdata state
+      } else {
+        toast.error(res.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+  
+  
+   useEffect(()=>{
+      getTutorsData()
+   },[])
+
   // Context value for consumers
   const value = {
     token,
@@ -551,9 +628,15 @@ const AppContext = ({ children }) => {
     loading,
     currencySymbol,
     backendURL,
+    tutors,
+    getAllTutors
   };
 
-  return <AContext.Provider value={value}>{children}</AContext.Provider>;
+  return (
+  <AContext.Provider value={value}>
+    {children}
+    </AContext.Provider>
+  )
 };
 
 export default AppContext;

@@ -523,7 +523,35 @@ const addTutor = async (req, res) => {
       return res.status(500).json({ success: false, message: 'Internal server error' });
     }
   };
+
+    const allTutors = async( req,res)=>{
+        try{
+           const tutors= await TutorModel.find({}).select('-password')
+           res.json({success:true,tutors})
+
+         }
+           catch(error)
+           {
+              console.log(error)
+              res.json({success:false,message:error.message})
+           }
+    }
+
+
+    const tutorList = async (req,res)=>{
+
+      try{
+         const tut= await TutorModel.find({}).select(['-email','-password'])
+         res.json({success:true,message:tut})
+
+      }
+      catch(error)
+      {
+          console.log(error)
+          res.json({success:false,message:error.message})
+      }
+    }
   
-  export { addTutor , loginTutor};
+  export { addTutor , loginTutor,allTutors, tutorList};
 
   

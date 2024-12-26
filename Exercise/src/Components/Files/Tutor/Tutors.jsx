@@ -207,7 +207,7 @@
 // export default Tutors;
 
 
-
+// latest working code
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import './Tutor.css';
@@ -296,3 +296,308 @@ const Tutors = () => {
 };
 
 export default Tutors;
+
+
+// import React, { useState, useEffect, useContext } from 'react';
+// import { useNavigate, useParams } from 'react-router-dom';
+// import axios from 'axios';
+// import './Tutor.css';
+// import { AContext } from '../Context/AppContext';
+
+// const Tutors = () => {
+//   const { speciality } = useParams();
+//   const [filterDoc, setFilterDoc] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState(null);
+//   const { tutors, setTutors } = useContext(AContext);
+//   const navigate = useNavigate();
+
+//   const backendUrl = 'http://localhost:4000';
+
+//   // Fetch tutors data from the database
+//   const fetchTutors = async () => {
+//     try {
+//       setLoading(true);
+//       // First make POST request to get all tutors
+//       await axios.post(`${backendUrl}/api/tutor/all-tutors`);
+      
+//       // Then make GET request to list tutors
+//       const response = await axios.get(`${backendUrl}/api/tutor/list`);
+//       setTutors(response.data);
+      
+//       // If no speciality is selected, show all tutors initially
+//       if (!speciality) {
+//         setFilterDoc(response.data);
+//       }
+//       setLoading(false);
+//     } catch (err) {
+//       console.error('Error fetching tutors:', err);
+//       setError('Failed to fetch tutors data. Please try again later.');
+//       setLoading(false);
+//     }
+//   };
+
+//   // Fetch tutors when component mounts
+//   useEffect(() => {
+//     fetchTutors();
+//   }, []);
+
+//   // Apply filter logic based on speciality
+//   const applyFilter = () => {
+//     if (!tutors) return;
+    
+//     if (speciality) {
+//       const filtered = tutors.filter((doc) =>
+//         doc.speciality.toLowerCase().trim() === speciality.toLowerCase().trim()
+//       );
+//       setFilterDoc(filtered);
+//     } else {
+//       setFilterDoc(tutors);
+//     }
+//   };
+
+//   // Apply filter whenever speciality or tutors data changes
+//   useEffect(() => {
+//     applyFilter();
+//   }, [tutors, speciality]);
+
+//   // List of specialities
+//   const specialities = [
+//     'Sports Therapists',
+//     'Geriatric Exercise',
+//     'Aquatic Therapy',
+//     'Neurological Rehabilitation',
+//     'Clinical Exercise',
+//     'Rehabilitation',
+//     'Pediatric Exercise',
+//     'Occupational Therapy'
+//   ];
+
+//   if (loading) {
+//     return <div className="loading">Loading tutors...</div>;
+//   }
+
+//   if (error) {
+//     return <div className="error">{error}</div>;
+//   }
+
+//   return (
+//     <div className="container">
+//       <p>Browse through the specialist tutors</p>
+//       <div className="special">
+//         {specialities.map((special) => (
+//           <p
+//             key={special}
+//             onClick={() =>
+//               speciality === special
+//                 ? navigate('/Tutors')
+//                 : navigate(`/Tutors/${encodeURIComponent(special)}`)
+//             }
+//             className={speciality === special ? 'active' : ''}
+//           >
+//             {special}
+//           </p>
+//         ))}
+//       </div>
+
+//       <div className="Tutor">
+//         {filterDoc.length === 0 ? (
+//           <div className="no-results">No tutors found for this speciality</div>
+//         ) : (
+//           filterDoc.map((item) => (
+//             <div
+//               onClick={() => navigate(`/Appointment/${item._id}`)}
+//               key={item._id}
+//               className="items"
+//             >
+//               <div className="content">
+//                 <div style={{ position: 'relative' }}>
+//                   <img 
+//                     src={item.image} 
+//                     alt={item.name}
+//                     onError={(e) => {
+//                       e.target.src = 'https://via.placeholder.com/150';
+//                     }}
+//                   />
+//                   <div className="status">
+//                     <p>Available</p>
+//                   </div>
+//                 </div>
+//                 <h2>{item.name}</h2>
+//                 <p>{item.speciality}</p>
+//               </div>
+//             </div>
+//           ))
+//         )}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Tutors;
+
+
+
+// import React, { useState, useEffect, useContext } from 'react';
+// import { useNavigate, useParams } from 'react-router-dom';
+// import axios from 'axios';
+// import './Tutor.css';
+// import { AContext } from '../Context/AppContext';
+
+// const Tutors = () => {
+//   const { speciality } = useParams();
+//   const [filterDoc, setFilterDoc] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState(null);
+//   const { tutors, setTutors } = useContext(AContext);
+//   const navigate = useNavigate();
+
+//   const backendUrl = 'http://localhost:4000';
+
+//   // Fetch tutors data from the backend
+//   const fetchTutors = async () => {
+//     try {
+//       setLoading(true);
+//       setError(null);
+      
+//       const response = await axios.get(`${backendUrl}/api/tutor/list`);
+      
+//       if (!response.data) {
+//         throw new Error('No data received from server');
+//       }
+      
+//       setTutors(response.data);
+      
+//       // Apply initial filtering
+//       if (speciality) {
+//         const filtered = response.data.filter((doc) =>
+//           doc.speciality.toLowerCase().trim() === speciality.toLowerCase().trim()
+//         );
+//         setFilterDoc(filtered);
+//       } else {
+//         setFilterDoc(response.data);
+//       }
+      
+//     } catch (err) {
+//       console.error('Error fetching tutors:', err);
+//       setError(err.response?.data?.message || 'Failed to fetch tutors. Please try again later.');
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   // Fetch tutors when component mounts
+//   useEffect(() => {
+//     fetchTutors();
+//   }, []);
+
+//   // Apply filter when speciality changes
+//   useEffect(() => {
+//     if (tutors?.length) {
+//       if (speciality) {
+//         const filtered = tutors.filter((doc) =>
+//           doc.speciality.toLowerCase().trim() === speciality.toLowerCase().trim()
+//         );
+//         setFilterDoc(filtered);
+//       } else {
+//         setFilterDoc(tutors);
+//       }
+//     }
+//   }, [speciality, tutors]);
+
+//   const specialities = [
+//     'Sports Therapists',
+//     'Geriatric Exercise', 
+//     'Aquatic Therapy',
+//     'Neurological Rehabilitation',
+//     'Clinical Exercise',
+//     'Rehabilitation',
+//     'Pediatric Exercise',
+//     'Occupational Therapy'
+//   ];
+
+//   // Loading state with retry option
+//   if (loading) {
+//     return (
+//       <div className="container">
+//         <div className="loading-state">
+//           <p>Loading tutors...</p>
+//           <div className="loading-spinner"></div>
+//         </div>
+//       </div>
+//     );
+//   }
+
+//   // Error state with retry option
+//   if (error) {
+//     return (
+//       <div className="container">
+//         <div className="error-state">
+//           <p>{error}</p>
+//           <button onClick={fetchTutors} className="retry-button">
+//             Retry
+//           </button>
+//         </div>
+//       </div>
+//     );
+//   }
+
+//   return (
+//     <div className="container">
+//       <p>Browse through the specialist tutors</p>
+//       <div className="special">
+//         {specialities.map((special) => (
+//           <p
+//             key={special}
+//             onClick={() =>
+//               speciality === special
+//                 ? navigate('/Tutors')
+//                 : navigate(`/Tutors/${encodeURIComponent(special)}`)
+//             }
+//             className={speciality === special ? 'active' : ''}
+//           >
+//             {special}
+//           </p>
+//         ))}
+//       </div>
+
+//       <div className="Tutor">
+//         {filterDoc.length === 0 ? (
+//           <div className="no-results">
+//             <p>No tutors found {speciality ? `for ${speciality}` : ''}</p>
+//           </div>
+//         ) : (
+//           filterDoc.map((item) => (
+//             <div
+//               onClick={() => navigate(`/Appointment/${item._id}`)}
+//               key={item._id}
+//               className="items"
+//             >
+//               <div className="content">
+//                 <div style={{ position: 'relative' }}>
+//                   <img 
+//                     src={item.image} 
+//                     alt={item.name}
+//                     onError={(e) => {
+//                       e.target.src = '/placeholder-tutor.png'; // Fallback image
+//                     }}
+//                   />
+//                   <div className="status">
+//                     <p>Available</p>
+//                   </div>
+//                 </div>
+//                 <h2>{item.name}</h2>
+//                 <p>{item.speciality}</p>
+//                 <p className="experience">{item.experience} years experience</p>
+//               </div>
+//             </div>
+//           ))
+//         )}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Tutors;
+
+
