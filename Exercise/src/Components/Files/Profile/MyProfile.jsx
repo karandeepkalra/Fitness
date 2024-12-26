@@ -3,45 +3,55 @@
 // import './myprofile.css';
 
 // const MyProfile = () => {
-//   const { userData, setUserData } = useContext(AContext); // Using userData from context
+//   const { userData, setUserData } = useContext(AContext);
 //   const [isEditing, setIsEditing] = useState(false);
 //   const [editedProfile, setEditedProfile] = useState({
 //     email: '',
 //     phone: '',
 //     gender: '',
-//     birthday: '',
-//     name: '..',
+//     dob: '',  // Changed from birthday to dob for consistency
+//     name: '',
 //   });
 
 //   useEffect(() => {
 //     if (userData) {
+//       // Format the date to YYYY-MM-DD for input type="date"
+//       const formattedDob = userData.dob ? userData.dob.split('T')[0] : '';
+      
 //       setEditedProfile({
 //         email: userData.email || '',
 //         phone: userData.phone || '',
 //         gender: userData.gender || '',
-//         birthday: userData.dob || '',
+//         dob: formattedDob,  // Use dob consistently
 //         name: userData.name || '',
 //       });
 //     }
-//   }, [userData]); 
+//   }, [userData]);
 
 //   const handleEdit = () => {
 //     setIsEditing(true);
 //     setEditedProfile({
-//       ...userData, 
+//       ...userData,
+//       dob: userData.dob ? userData.dob.split('T')[0] : '', // Ensure proper date format when editing
 //     });
 //   };
 
 //   const handleSave = () => {
-//     setUserData(editedProfile); 
-//     localStorage.setItem('userData', JSON.stringify(editedProfile)); 
+//     const updatedProfile = {
+//       ...editedProfile,
+//       dob: editedProfile.dob, // Keep using dob consistently
+//     };
+
+//     setUserData(updatedProfile);
+//     localStorage.setItem('userData', JSON.stringify(updatedProfile));
 //     setIsEditing(false);
 //   };
 
 //   const handleCancel = () => {
 //     setIsEditing(false);
 //     setEditedProfile({
-//       ...userData, 
+//       ...userData,
+//       dob: userData.dob ? userData.dob.split('T')[0] : '', // Ensure proper date format when canceling
 //     });
 //   };
 
@@ -129,8 +139,8 @@
 //                   <label>Birthday:</label>
 //                   <input
 //                     type="date"
-//                     name="birthday"
-//                     value={editedProfile.birthday}
+//                     name="dob"  // Changed from birthday to dob
+//                     value={editedProfile.dob}  // Changed from birthday to dob
 //                     onChange={handleChange}
 //                   />
 //                 </div>
@@ -143,7 +153,7 @@
 //                 </div>
 //                 <div className="profile-field">
 //                   <label>Birthday:</label>
-//                   <span>{editedProfile.birthday || 'N/A'}</span>
+//                   <span>{editedProfile.dob || 'N/A'}</span>  
 //                 </div>
 //               </>
 //             )}
@@ -174,6 +184,7 @@
 // };
 
 // export default MyProfile;
+
 
 import React, { useContext, useState, useEffect } from 'react';
 import { AContext } from '../Context/AppContext';
