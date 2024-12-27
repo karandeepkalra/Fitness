@@ -14,9 +14,9 @@ import { AppContext } from './context/AppContext';
 import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
-  const { aToken } = useContext(AppContext);
+  const { token } = useContext(AppContext);
 
-  if (!aToken) {
+  if (!token) {
     return (
       <>
         <Login />

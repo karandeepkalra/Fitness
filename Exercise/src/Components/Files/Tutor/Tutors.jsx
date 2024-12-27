@@ -298,6 +298,7 @@
 // export default Tutors;
 
 
+// running 
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import './Tutor.css';
@@ -390,6 +391,40 @@ const Tutors = () => {
 };
 
 export default Tutors;
+
+
+// import React, { useContext } from "react";
+// import { useNavigate } from "react-router-dom";
+// import { AContext } from "../Context/AppContext";
+
+// const Tutors = () => {
+//   const { tutorsData } = useContext(AContext);
+//   const navigate = useNavigate();
+
+//   return (
+//     <div className="container">
+//       <h2>Available Tutors</h2>
+//       <div className="tutors-list">
+//         {tutorsData.map((tutor) => (
+//           <div
+//             key={tutor._id}
+//             className="tutor-card"
+//             onClick={() => navigate(`/Appointment/${tutor._id}`)}
+//           >
+//             <img src={tutor.image} alt={tutor.name} />
+//             <h3>{tutor.name}</h3>
+//             <p>{tutor.speciality}</p>
+//           </div>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Tutors;
+
+
+
 
 
 // import React, { useState, useEffect, useContext } from 'react';

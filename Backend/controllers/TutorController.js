@@ -364,6 +364,7 @@
 
 // export { addTutor, loginTutor };
 
+
 import validator from "validator"
 import bcrypt from 'bcrypt'
 import {v2 as cloudinary} from 'cloudinary'
@@ -371,7 +372,6 @@ import TutorModel from "../models/TutorModel.js"
 import fs from 'fs'
 import mongoose from 'mongoose'
 import jwt from 'jsonwebtoken'
-
 
 
 const addTutor = async (req, res) => {
@@ -551,25 +551,22 @@ const addTutor = async (req, res) => {
           res.json({success:false,message:error.message})
       }
     }
+
+    const getTutorById = async (req, res) => {
+      try {
+        const { id } = req.params;
+        const tutor = await TutorModel.findById(id).select("-password");
+        if (!tutor) {
+          return res.status(404).json({ success: false, message: "Tutor not found" });
+        }
+        res.status(200).json(tutor);
+      } catch (error) {
+        console.error("Error fetching tutor by ID:", error);
+        res.status(500).json({ success: false, message: "Internal server error" });
+      }
+    };
   
-  // const changeAvailability = async (req,res)=>{
-  //           try{
- 
-  //             const {tutId} = req.body
-  //             const tutData = await TutorModel.findById(tutId)
-  //             await TutorModel.findByIdAndUpdate(tutId,{available: !tutData.available})
-  //             res.json({success:true,message:'Availability changed'})
-
-
-  //           }
-  //           catch(error)
-  //           {
-  //             console.log(error)
-  //              res.json({success:false,message:error.message})
-  //           }
-
-  // }
-
-  export { addTutor , loginTutor,allTutors, tutorList};
+  
+  export { addTutor , loginTutor,allTutors, tutorList,getTutorById};
 
   

@@ -4,11 +4,11 @@ import { assets } from '../../assets/assets';
 import './Sidebar.css';
 import { AppContext } from '../../context/AppContext';
 const Sidebar = () => {
-   const { aToken } = useContext(AppContext);
+   const { token } = useContext(AppContext);
  
   return (
     <div className="sidebar">
-      {aToken && (
+      {token && (
         <ul>
           <NavLink to="/admin-dashboard" className={({ isActive }) => (isActive ? 'active' : '')}>
             <img src={assets.home_icon} alt="Dashboard" />

@@ -19,7 +19,7 @@ const Navbar = () => {
       <div className="cont">
         <div className="top">
           <img src={assets.admin_logo} alt="Admin Logo" />
-          <p>{aToken ? 'Admin' : 'Doctor'}</p>
+          <p>{token ? 'doctor' : 'register'}</p>
         </div>
         <button className='Btn1' onClick={logout}>Logout</button>
       </div>

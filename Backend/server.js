@@ -47,6 +47,8 @@ app.get('/', (req, res) => {
   res.send('API working');
 });
 
+
+
 // Error handling for port already in use
 // const startServer = () => {
 //   try {

@@ -95,6 +95,8 @@
   
   /* Logout button styles */
   .Btn1 {
+    height:48px;
+    width:90px;
     padding: 8px 20px;
     background-color: #dc3545;
     color: white;

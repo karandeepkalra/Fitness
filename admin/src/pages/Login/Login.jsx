@@ -87,6 +87,7 @@ const Login = () => {
     e.preventDefault();
     if (!validateForm()) return;
 
+
     try {
       let response;
       if (formState === "login") {
@@ -122,6 +123,7 @@ const Login = () => {
       if (data.success) {
         localStorage.setItem("token", data.token);
         setToken(data.token);
+        console.log(data.token);
         toast.success(`${formState === "login" ? "Login" : "Registration"} successful`);
         navigate("/");
       }
