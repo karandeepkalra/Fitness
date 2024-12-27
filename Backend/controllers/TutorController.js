@@ -552,6 +552,24 @@ const addTutor = async (req, res) => {
       }
     }
   
+  // const changeAvailability = async (req,res)=>{
+  //           try{
+ 
+  //             const {tutId} = req.body
+  //             const tutData = await TutorModel.findById(tutId)
+  //             await TutorModel.findByIdAndUpdate(tutId,{available: !tutData.available})
+  //             res.json({success:true,message:'Availability changed'})
+
+
+  //           }
+  //           catch(error)
+  //           {
+  //             console.log(error)
+  //              res.json({success:false,message:error.message})
+  //           }
+
+  // }
+
   export { addTutor , loginTutor,allTutors, tutorList};
 
   

@@ -441,6 +441,7 @@ const TopTutors = () => {
                 className="tutor-image"
               />
               <div className="availability-badge">
+                <input  type="checkbox" checked={tutor.available} />
                 <span>Available</span>
               </div>
             </div>

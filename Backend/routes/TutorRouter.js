@@ -7,5 +7,7 @@ const TutorRouter = express.Router();
 TutorRouter.post('/register',upload.single('image'),addTutor)
 TutorRouter.post('/login',loginTutor)
 TutorRouter.post('/all-tutors',allTutors)
-TutorRouter.get('list',tutorList)
+TutorRouter.get('/list',tutorList)
+// TutorRouter.get('/change-availability',changeAvailability)
+
 export default TutorRouter;

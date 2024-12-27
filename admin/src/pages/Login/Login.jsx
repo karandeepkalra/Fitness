@@ -248,12 +248,12 @@ const Login = () => {
                   >
                     <option value="Clinical Exercise">Clinical Exercise</option>
                     <option value="Rehabilitation">Rehabilitation</option>
-                    <option value="Sports Therapist">Sports Therapist</option>
+                    <option value="Sports Therapists">Sports Therapists</option>
                     <option value="Neurological Rehabilitation">Neurological Rehabilitation</option>
-                    <option value="Geriatic Exercise">Geriatic Exercise</option>
+                    <option value="Geriatric Exercise">Geriatric Exercise</option>
                     <option value="Aquatic Therapy">Aquatic Therapy</option>
                     <option value="Occupational Therapy">Occupational Therapy</option>
-                    <option value="Pediatrician">Pediatrician</option>
+                    <option value="Pediatric Exercise">Pediatric Exercise</option>
                     
                   </select>
                 </div>
