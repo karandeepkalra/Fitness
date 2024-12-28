@@ -1,370 +1,3 @@
-// import validator from "validator"
-// import bcrypt from 'bcrypt'
-// import {v2 as cloudinary} from 'cloudinary'
-// import TutorModel from "../models/TutorModel.js"
-// import fs from 'fs'
-// import mongoose from 'mongoose'
-// import jwt from 'jsonwebtoken'
-
-// const addTutor = async(req, res) => {
-//     try {
-//         const {name, email, password, speciality, degree, experience, about, fees, address} = req.body;
-//         const imageFile = req.file;
-        
-//         if (!imageFile) {
-//             return res.status(400).json({
-//                 success: false, 
-//                 message: "Image file is required"
-//             });
-//         }
-//         if(!name || !email || !password || !speciality || !degree || !experience || !about || !fees || !address) {
-//             return res.status(400).json({
-//                 success: false, 
-//                 message: "Missing details"
-//             });
-//         }
-
-//         if(!validator.isEmail(email)) {
-//             return res.status(400).json({
-//                 success: false, 
-//                 message: "Please enter valid email"
-//             });
-//         }
-
-//         if(password.length < 8) {
-//             return res.status(400).json({
-//                 success: false, 
-//                 message: "Please enter a strong password"
-//             });
-//         }
-
-//         const existingTutor = await TutorModel.findOne({ email });
-//         if (existingTutor) {
-//             return res.status(400).json({
-//                 success: false,
-//                 message: "Email already registered"
-//             });
-//         }
-
-//         const salt = await bcrypt.genSalt(10);
-//         const hashedPassword = await bcrypt.hash(password, salt);
-
-//         let parsedAddress;
-//         try {
-//             parsedAddress = typeof address === 'string' ? JSON.parse(address) : address;
-//         } catch (e) {
-//             return res.status(400).json({
-//                 success: false, 
-//                 message: "Invalid address format"
-//             });
-//         }
-
-//         try {
-//             const db = mongoose.connection.db;
-//             const collections = await db.listCollections({ name: 'tutors' }).toArray();
-            
-//             if (collections.length === 0) {
-//                 await db.createCollection('tutors');
-//                 console.log("'tutors' collection created");
-//             }
-
-//             const imageUpload = await cloudinary.uploader.upload(imageFile.path, {
-//                 folder: 'tutors',
-//                 resource_type: 'auto',
-//                 allowed_formats: ['jpg', 'png', 'jpeg', 'gif'],
-//                 transformation: [{
-//                     quality: 'auto:good',
-//                     fetch_format: 'auto'
-//                 }]
-//             });
-
-//             const tutorData = {
-//                 name,
-//                 email,
-//                 image: imageUpload.secure_url,
-//                 password: hashedPassword,
-//                 speciality,
-//                 degree,
-//                 experience,
-//                 about,
-//                 fees: Number(fees),
-//                 address: parsedAddress,
-//                 date: Date.now()
-//             };
-
-//             const newTutor = new TutorModel(tutorData);
-//             await newTutor.save();
-
-//             const token = jwt.sign({ id: tutor._id }, process.env.JWT_SECRET || 'default_secret_key', { expiresIn: '1h' });
-
-//             if (fs.existsSync(imageFile.path)) {
-//                 fs.unlinkSync(imageFile.path);
-//             }
-
-//             return res.status(201).json({
-//                 success: true, 
-//                 message: "Tutor added successfully",token,
-//                 tutor: {
-//                     name: newTutor.name,
-//                     email: newTutor.email,
-//                     image: newTutor.image,
-//                     speciality: newTutor.speciality,
-//                     degree: newTutor.degree,
-//                     experience: newTutor.experience,
-//                     about: newTutor.about,
-//                     fees: newTutor.fees,
-//                     address: newTutor.address
-//                 }
-//             });
-
-//         } catch (uploadError) {
-//             console.error('Operation error:', uploadError);
-            
-//             if (fs.existsSync(imageFile.path)) {
-//                 fs.unlinkSync(imageFile.path);
-//             }
-
-//             if (uploadError.message.includes('Invalid namespace')) {
-//                 return res.status(500).json({
-//                     success: false,
-//                     message: "Database configuration error. Please contact administrator."
-//                 });
-//             }
-
-//             return res.status(500).json({
-//                 success: false, 
-//                 message: `Operation failed: ${uploadError.message}`
-//             });
-//         }
-
-//     } catch (error) {
-//         console.error("Error in addTutor:", error);
-        
-//         if (imageFile && fs.existsSync(imageFile.path)) {
-//             fs.unlinkSync(imageFile.path);
-//         }
-
-//         return res.status(500).json({
-//             success: false, 
-//             message: "Internal server error. Please try again later."
-//         });
-//     }
-// };
-
-
-// const loginTutor = async (req, res) => {
-//     try {
-//       const { email, password } = req.body;
-  
-//       if (!email || !password) {
-//         return res.json({ success: false, message: 'Email and password are required' });
-//       }
-  
-//       const tutor = await TutorModel.findOne({ email });
-//       if (!tutor) {
-//         return res.json({ success: false, message: 'Tutor not found' });
-//       }
-  
-//       const isMatch = await bcrypt.compare(password, tutor.password);
-//       if (!isMatch) {
-//         return res.json({ success: false, message: 'Incorrect password' });
-//       }
-  
-//       const token = jwt.sign({ id: tutor._id }, process.env.JWT_SECRET || 'default_secret_key', { expiresIn: '1h' });
-  
-//       res.json({ success: true, token });
-//     } catch (error) {
-//       res.json({ success: false, message: error.message });
-//     }
-//   };
-
-// export { addTutor , loginTutor};
-
-
-
-// import validator from "validator";
-// import bcrypt from 'bcrypt';
-// import { v2 as cloudinary } from 'cloudinary';
-// import TutorModel from "../models/TutorModel.js";
-// import fs from 'fs';
-// import mongoose from 'mongoose';
-// import jwt from 'jsonwebtoken';
-
-// const addTutor = async (req, res) => {
-//     try {
-//         const { name, email, password, speciality, degree, experience, about, fees, address } = req.body;
-//         const imageFile = req.file;
-        
-//         if (!imageFile) {
-//             return res.status(400).json({
-//                 success: false, 
-//                 message: "Image file is required"
-//             });
-//         }
-//         if (!name || !email || !password || !speciality || !degree || !experience || !about || !fees || !address) {
-//             return res.status(400).json({
-//                 success: false, 
-//                 message: "Missing details"
-//             });
-//         }
-
-//         if (!validator.isEmail(email)) {
-//             return res.status(400).json({
-//                 success: false, 
-//                 message: "Please enter valid email"
-//             });
-//         }
-
-//         if (password.length < 8) {
-//             return res.status(400).json({
-//                 success: false, 
-//                 message: "Please enter a strong password"
-//             });
-//         }
-
-//         const existingTutor = await TutorModel.findOne({ email });
-//         if (existingTutor) {
-//             return res.status(400).json({
-//                 success: false,
-//                 message: "Email already registered"
-//             });
-//         }
-
-//         const salt = await bcrypt.genSalt(10);
-//         const hashedPassword = await bcrypt.hash(password, salt);
-
-//         let parsedAddress;
-//         try {
-//              parsedAddress = { address1: req.body.address1, address2: req.body.address2 };
-//         } catch (e) {
-//             return res.status(400).json({
-//                 success: false, 
-//                 message: "Invalid address format"
-//             });
-//         }
-
-//         try {
-//             const db = mongoose.connection.db;
-//             const collections = await db.listCollections({ name: 'tutors' }).toArray();
-            
-//             if (collections.length === 0) {
-//                 await db.createCollection('tutors');
-//                 console.log("'tutors' collection created");
-//             }
-
-//             const imageUpload = await cloudinary.uploader.upload(imageFile.path, {
-//                 folder: 'tutors',
-//                 resource_type: 'auto',
-//                 allowed_formats: ['jpg', 'png', 'jpeg', 'gif'],
-//                 transformation: [{
-//                     quality: 'auto:good',
-//                     fetch_format: 'auto'
-//                 }]
-//             });
-
-//             const tutorData = {
-//                 name,
-//                 email,
-//                 image: imageUpload.secure_url,
-//                 password: hashedPassword,
-//                 speciality,
-//                 degree,
-//                 experience,
-//                 about,
-//                 fees: Number(fees),
-//                 address: parsedAddress,
-//                 date: Date.now()
-//             };
-
-//             const newTutor = new TutorModel(tutorData);
-//             await newTutor.save();
-
-//             const token = jwt.sign({ id: newTutor._id }, process.env.JWT_SECRET || 'default_secret_key', { expiresIn: '1h' });
-
-//             if (fs.existsSync(imageFile.path)) {
-//                 fs.unlinkSync(imageFile.path);
-//             }
-
-//             return res.status(201).json({
-//                 success: true, 
-//                 message: "Tutor added successfully", 
-//                 token,
-//                 tutor: {
-//                     name: newTutor.name,
-//                     email: newTutor.email,
-//                     image: newTutor.image,
-//                     speciality: newTutor.speciality,
-//                     degree: newTutor.degree,
-//                     experience: newTutor.experience,
-//                     about: newTutor.about,
-//                     fees: newTutor.fees,
-//                     address: newTutor.address
-//                 }
-//             });
-
-//         } catch (uploadError) {
-//             console.error('Operation error:', uploadError);
-            
-//             if (fs.existsSync(imageFile.path)) {
-//                 fs.unlinkSync(imageFile.path);
-//             }
-
-//             if (uploadError.message.includes('Invalid namespace')) {
-//                 return res.status(500).json({
-//                     success: false,
-//                     message: "Database configuration error. Please contact administrator."
-//                 });
-//             }
-
-//             return res.status(500).json({
-//                 success: false, 
-//                 message: `Operation failed: ${uploadError.message}`
-//             });
-//         }
-
-//     } catch (error) {
-//         console.error("Error in addTutor:", error);
-        
-//         if (imageFile && fs.existsSync(imageFile.path)) {
-//             fs.unlinkSync(imageFile.path);
-//         }
-
-//         return res.status(500).json({
-//             success: false, 
-//             message: "Internal server error. Please try again later."
-//         });
-//     }
-// };
-
-// const loginTutor = async (req, res) => {
-//     try {
-//         const { email, password } = req.body;
-
-//         if (!email || !password) {
-//             return res.json({ success: false, message: 'Email and password are required' });
-//         }
-
-//         const tutor = await TutorModel.findOne({ email });
-//         if (!tutor) {
-//             return res.json({ success: false, message: 'Tutor not found' });
-//         }
-
-//         const isMatch = await bcrypt.compare(password, tutor.password);
-//         if (!isMatch) {
-//             return res.json({ success: false, message: 'Incorrect password' });
-//         }
-
-//         const token = jwt.sign({ id: tutor._id }, process.env.JWT_SECRET || 'default_secret_key', { expiresIn: '1h' });
-
-//         res.json({ success: true, token });
-//     } catch (error) {
-//         res.json({ success: false, message: error.message });
-//     }
-// };
-
-// export { addTutor, loginTutor };
-
-
 import validator from "validator"
 import bcrypt from 'bcrypt'
 import {v2 as cloudinary} from 'cloudinary'
@@ -372,6 +5,7 @@ import TutorModel from "../models/TutorModel.js"
 import fs from 'fs'
 import mongoose from 'mongoose'
 import jwt from 'jsonwebtoken'
+import appointmentModel from "../models/appointmentModel.js"
 
 
 const addTutor = async (req, res) => {
@@ -566,7 +200,60 @@ const addTutor = async (req, res) => {
       }
     };
   
-  
-  export { addTutor , loginTutor,allTutors, tutorList,getTutorById};
 
+    // api to get tutor appointments for tutor panel
+    const appointmentsTutor= async(req,res)=>{
+      try{
+           const {tutId} = req.body
+           const appointments = await appointmentModel.find({tutId})
+
+           res.json({succes:true,message:appointments})
+      }
+      catch(error)
+      {
+        console.log(error);
+        res.json({succes:false,message:error.message})
+      }
+    }
+
+
+    const tutorDashboard = async(req,res)=>{
+       try{
+         const {tutId} = req.body
+         const appointments = await appointmentModel.find({tutId})
+
+         let earnings = 0
+         appointments.map((item)=>{
+          if(item.isCompleted || item.payment)
+          {
+             earnings+=item.amount
+          }
+         })
+
+         let patients = []
+         appointments.map((item)=>{
+            if(!patients.includes(item.userId))
+            {
+              patients.push(item.userId)
+            }
+         })
+
+         const dashData={
+          earnings,
+          appintments: appointments.length,
+          patients:patients.length,
+          latestAppointments:appointments.reverse().slice(0,5)
+         }
+
+         res.json({success:true,dashData})
+
+       } 
+       catch(error)
+       {
+          console.log(error);
+          res.json({succes:false,message:error.message})
+       }
+
+    }
   
+  export { addTutor , loginTutor,allTutors, tutorList,getTutorById, appointmentsTutor,tutorDashboard};

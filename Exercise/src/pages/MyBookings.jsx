@@ -1,9 +1,10 @@
 import React from 'react'
+import My_Appointment from '../Components/Files/MyAppointment/My_Appointment'
 
 const MyBookings = () => {
   return (
     <div>
-      <p>My booking</p>
+      <My_Appointment/>
     </div>
   )
 }

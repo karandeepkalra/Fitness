@@ -2,7 +2,7 @@ import React from 'react'
 
 const DoctorList = () => {
   return (
-    <div>DoctorList</div>
+    <div>Doctors List</div>
   )
 }
 

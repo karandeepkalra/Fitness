@@ -1,214 +1,192 @@
-:root {
-  --primary-gradient: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-  --secondary-gradient: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 100%);
-  --text-color: #333;
-  --background-color: #f4f4f8;
-  --selected-color: rgba(255, 255, 255, 0.7);
-}
-
-.containers {
-  display: flex;
+.appointment-container {
   max-width: 1200px;
-  margin: 2rem auto;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.appointment-grid {
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 2rem;
-  padding: 1rem;
-  background-color: var(--background-color);
-  border-radius: 15px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
-.user-card {
-  flex: 1;
-  background: var(--primary-gradient);
-  border-radius: 15px;
+@media (min-width: 768px) {
+  .appointment-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  color: white;
-  transition: transform 0.3s ease-in-out;
-}
-
-.user-card:hover {
-  transform: scale(1.02);
 }
 
 .card-header {
-  position: relative;
-  height: 250px;
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.card-image-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 5px solid white;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-}
-
-.card-image-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  padding: 1.5rem;
 }
 
 .card-content {
   padding: 1.5rem;
-  text-align: center;
 }
 
-.name {
-  font-size: 1.8rem;
-  margin-bottom: 0.5rem;
+/* Tutor Card Styles */
+.tutor-card {
+  height: fit-content;
+}
+
+.image-container {
+  position: relative;
+  width: 100%;
+  padding-top: 100%;
+}
+
+.tutor-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tutor-name {
+  font-size: 1.5rem;
   font-weight: bold;
+  text-align: center;
+  margin-top: 1rem;
+  color: #333;
 }
 
-.role {
-  color: rgba(255, 255, 255, 0.8);
-  margin-bottom: 1rem;
-}
-
-.details {
+.info-item {
   display: flex;
-  justify-content: center;
-  margin: 1rem 0;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  color: #666;
 }
 
-.detail-item {
-  background: rgba(255, 255, 255, 0.2);
-  padding: 0.5rem 1rem;
-  border-radius: 10px;
-  margin: 0 0.5rem;
-}
-
-.detail-label {
-  display: block;
-  color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 0.25rem;
-}
-
-.about {
-  color: rgba(255, 255, 255, 0.9);
-  line-height: 1.6;
+.icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #4a90e2;
 }
 
 .fees {
-  margin-top: 1rem;
-  font-size: 1.2rem;
-  font-weight: bold;
+  font-weight: 600;
+  color: #333;
 }
 
-.slots {
-  flex: 1;
-  background: var(--secondary-gradient);
-  border-radius: 15px;
-  padding: 1.5rem;
-  color: var(--text-color);
-  transition: all 0.3s ease;
-}
-
-.slots:hover {
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-}
-
-.slots > p {
-  font-size: 1.5rem;
-  text-align: center;
-  margin-bottom: 1rem;
-  font-weight: bold;
-}
-
-.slots-content {
+/* Booking Card Styles */
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  color: #333;
+}
+
+.selection-section {
+  margin-bottom: 1.5rem;
+}
+
+.section-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #666;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.days-grid,
+.time-slots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
   gap: 0.5rem;
 }
 
-/* Previous CSS remains the same, add these styles: */
-.time-slots-content {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  justify-content: center;
-  margin-top: 1rem;
-}
-
-.time-slot {
-  background: rgba(255, 255, 255, 0.3);
+.day-button,
+.time-slot-button {
+  padding: 0.5rem;
+  font-size: 0.875rem;
   border-radius: 8px;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.time-slot.selected {
-  background: var(--selected-color);
-  transform: scale(1.05);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-.time-slot:hover {
-  background: rgba(255, 255, 255, 0.5);
-}
-
-
-
-/* Button Styles */
-.slots button {
-  width: 100%;
-  margin-top: 1.5rem;
-  padding: 12px;
-  background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
-  color: var(--text-color);
   border: none;
-  border-radius: 10px;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: default;
-  opacity: 0.5;
-  transition: all 0.3s ease;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-.slots button.active {
+  background-color: #f3f4f6;
+  color: #666;
   cursor: pointer;
-  opacity: 1;
-  transform: translateY(-3px);
-  box-shadow: 0 7px 20px rgba(0,0,0,0.15);
+  transition: all 0.2s ease;
 }
 
-.slots button:hover.active {
-  background: linear-gradient(135deg, #ff7e90 0%, #f9b7a6 100%);
-  transform: translateY(-5px);
+.day-button:hover,
+.time-slot-button:hover {
+  background-color: #e5e7eb;
 }
 
+.day-button.selected,
+.time-slot-button.selected {
+  background-color: #4a90e2;
+  color: white;
+}
 
-
-.slots-content > div {
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 10px;
-  padding: 0.75rem;
-  text-align: center;
-  flex: 1;
-  transition: all 0.3s ease;
+.book-button {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: none;
+  font-weight: 500;
+  color: white;
+  background-color: #4a90e2;
   cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
-.slots-content > div.selected {
-  background: var(--selected-color);
-  transform: scale(1.05);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+.book-button:hover:not(:disabled) {
+  background-color: #357abd;
 }
 
-.slots-content > div:hover {
-  background: rgba(255, 255, 255, 0.5);
+.book-button:disabled {
+  background-color: #d1d5db;
+  cursor: not-allowed;
 }
 
-@media (max-width: 768px) {
-  .containers {
-    flex-direction: column;
+/* Loading Spinner */
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.loading-spinner::after {
+  content: '';
+  width: 3rem;
+  height: 3rem;
+  border: 2px solid #f3f4f6;
+  border-top: 2px solid #4a90e2;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 640px) {
+  .days-grid,
+  .time-slots-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .card-header,
+  .card-content {
+    padding: 1rem;
   }
 }

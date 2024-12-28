@@ -8,10 +8,8 @@ const AppContextProvider = (props) => {
     const backendUrl= import.meta.env.VITE_BACKEND_URL
   const [token, setToken] = useState(localStorage.getItem("token") || "");
 
-//   const setToken = (token) => {
-//     localStorage.setItem("aToken", token);
-//     setAToken(token);
-//   };
+   const [appointments,setAppointments] = useState([])
+    
 
   const value = {
     token,
