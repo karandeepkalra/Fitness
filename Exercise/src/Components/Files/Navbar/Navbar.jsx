@@ -276,7 +276,7 @@ const Navbar = () => {
                         <hr className="nav-underline" />
                     </li>
                 </NavLink>
-                <NavLink to='/contact' onClick={() => setShowMenu(false)}>
+                <NavLink to='/Contact' onClick={() => setShowMenu(false)}>
                     <li className="nav-item">CONTACT
                         <hr className="nav-underline" />
                     </li>

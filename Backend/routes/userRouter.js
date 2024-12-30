@@ -1,32 +1,8 @@
-// import express from 'express';
-// import { addUser, loginUser,getProfile ,updateProfile} from '../controllers/UserController.js';
-// import authUser from '../middlewares/authUser.js';
-// // import upload from '../middlewares/multer.js';
-// const router = express.Router();
-
-// // Sign Up Route
-// router.post('/', (req, res, next) => {
-//     console.log("POST /user/ route hit");
-//     next(); // Proceed to the actual controller
-// }, addUser);
-
-// // Login Route
-// router.post('/login', (req, res, next) => {
-//     console.log("POST /user/login route hit");
-//     next(); // Proceed to the actual controller
-// }, loginUser);
-
-// router.get('/get-profile',authUser,getProfile)
-// router.post('/update-profile',authUser,updateProfile)
-
-// export default router;
-
-
-
-
+// latest working code
 import express from 'express';
-import { addUser, loginUser, getProfile, updateProfile } from '../controllers/UserController.js';
+import { addUser, loginUser, getProfile, updateProfile,bookAppointment , listAppointment, paymRazorpay,verifyRazorpay} from '../controllers/UserController.js';
 import authUser from '../middlewares/authUser.js';
+
 
 const router = express.Router();
 
@@ -42,4 +18,12 @@ router.get('/get-profile', authUser, getProfile);
 // Update Profile
 router.post('/update-profile', authUser, updateProfile);
 
-export default router;
+router.post('/book-appointment', authUser,bookAppointment)
+
+router.get('/appointments',authUser,listAppointment)
+router.post('/payment-razorpay',authUser,paymRazorpay)
+router.post('/verify-razorpay',authUser,verifyRazorpay)
+export default router; 
+
+
+

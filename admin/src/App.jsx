@@ -1,17 +1,46 @@
-import React from 'react'
-import Login from './components/Pages/Login/Login'
-import Navbar from './components/Pages/Navbar/Navbar';
-import Sidebar from './components/Pages/Sidebar/Sidebar';
+
+// App.jsx
+import React, { useContext } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import Navbar from './pages/Navbar/Navbar';
+import Sidebar from './pages/Sidebar/Sidebar';
+import Dashboard from './pages/Doctor/Dashboard';
+import DoctorAppointments from './pages/Doctor/DoctorAppointments';
+import DoctorList from './pages/Doctor/DoctorList';
+import Login from './pages/login/login';
+import { AppContext } from './context/AppContext';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
-  return (
-    
-    <div>
-      <Navbar />
-      <Login />
-      <Sidebar />
-    </div>
-  )
-}
+  const { token } = useContext(AppContext);
 
-export default App
+  if (!token) {
+    return (
+      <>
+        <Login />
+        <ToastContainer />
+      </>
+    );
+  }
+
+  return (
+    <div>
+      <ToastContainer />
+      <Navbar />
+      <div className="main-container">
+        <Sidebar />
+        <div className="main-content">
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/doctor-dashboard" element={<Dashboard />} />
+            <Route path="/doctor-appointments" element={<DoctorAppointments />} />
+            <Route path="/doctor-list" element={<DoctorList />} />
+          </Routes>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default App;
