@@ -192,7 +192,7 @@ return (
                     Pay Online
                   </button>
                 )}
-                <button className="btn-cancel">Cancel Appointment</button>
+                {/* <button className="btn-cancel">Cancel Appointment</button> */}
               </div>
             </div>
           </div>

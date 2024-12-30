@@ -9,10 +9,10 @@ const Banner = () => {
         <div className='banner-container'>
             <div className='banner-content'>
                 <div className='banner-text'>
-                    <p>Book Classes</p>
-                    <p className='banner-subtitle'>With 50+ Experienced Trainers</p>
+                    <h1>Book Classes</h1>
+                    <h1 className='banner-subtitle'>With 50+ Experienced Trainers</h1>
                 </div>
-                <button onClick={() => navigate('/login')} className='banner-button'>Create account</button>
+                {/* <button onClick={() => navigate('/')} className='banner-button'>Create account</button> */}
             </div>
             <div className='banner-image-container'>
                 <img className='banner-image' src={banner} alt='/' />

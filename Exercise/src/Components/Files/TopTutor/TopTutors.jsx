@@ -272,7 +272,7 @@ const TopTutors = () => {
   useEffect(() => {
     if (tutors) {
       // Set initial display to first 4 tutors
-      setDisplayedTutors(tutors.slice(0, 4));
+      setDisplayedTutors(tutors.slice(0, 3));
     }
   }, [tutors]);
 
@@ -283,7 +283,7 @@ const TopTutors = () => {
       setShowAllTutors(true);
     } else {
       // Reset to show only 4 tutors
-      setDisplayedTutors(tutors.slice(0, 4));
+      setDisplayedTutors(tutors.slice(0, 3));
       setShowAllTutors(false);
     }
   };
@@ -308,10 +308,10 @@ const TopTutors = () => {
                 alt={tutor.name} 
                 className="tutor-image"
               />
-              <div className="availability-badge">
+              {/* <div className="availability-badge">
                 <input  type="checkbox" checked={tutor.available} />
                 <span>Available</span>
-              </div>
+              </div> */}
             </div>
             <div className="tutor-info">
               <h3>{tutor.name}</h3>
