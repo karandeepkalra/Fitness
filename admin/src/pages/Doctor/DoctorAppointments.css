@@ -1,21 +1,186 @@
-/* p{
-    color: black;
-    font-size: 10px;
-} */
-/* *{
-    margin: 0px;
-    padding: 0px;
-    box-sizing: border-box;
-} */
-
- /* .out{
-    height: 400px;
-    width: 100vw;
-    border: 2px solid black;
-}   */
-
-/* .head{
-    height: 20px;
-    margin-bottom:3px;
-    font-size:20px;
-} */
+  .doctor-appointments {
+    padding: 20px;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+  }
+  
+  .heading {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+  
+  .appointments-table {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  .table-header {
+    display: grid;
+    grid-template-columns: 0.5fr 2fr 1fr 1fr 1.5fr 1fr 1fr;
+    background-color: #f1f5f9;
+    padding: 15px;
+    font-weight: 600;
+    color: #475569;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  
+  .table-header p {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .table-body {
+    max-height: 600px;
+    overflow-y: auto;
+  }
+  
+  .table-row {
+    display: grid;
+    grid-template-columns: 0.5fr 2fr 1fr 1fr 1.5fr 1fr 1fr;
+    padding: 15px;
+    align-items: center;
+    border-bottom: 1px solid #e2e8f0;
+    transition: background-color 0.2s;
+  }
+  
+  .table-row:hover {
+    background-color: #f8fafc;
+  }
+  
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .user-name {
+    font-weight: 500;
+    color: #1e293b;
+  }
+  
+  .user-details {
+    font-size: 0.9em;
+    color: #64748b;
+  }
+  
+  .user-email {
+    color: #64748b;
+  }
+  
+  .payment-status {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-weight: 500;
+    text-align: center;
+    width: fit-content;
+  }
+  
+  .payment-status.paid {
+    background-color: #dcfce7;
+    color: #166534;
+  }
+  
+  .payment-status.pending {
+    background-color: #fef9c3;
+    color: #854d0e;
+  }
+  
+  .appointment-time {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .date {
+    font-weight: 500;
+    color: #1e293b;
+  }
+  
+  .time {
+    font-size: 0.9em;
+    color: #64748b;
+  }
+  
+  .fees {
+    font-weight: 500;
+    color: #1e293b;
+  }
+  
+  .status {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-weight: 500;
+    text-align: center;
+    width: fit-content;
+  }
+  
+  .status.scheduled {
+    background-color: #dbeafe;
+    color: #1e40af;
+  }
+  
+  .status.completed {
+    background-color: #dcfce7;
+    color: #166534;
+  }
+  
+  .status.cancelled {
+    background-color: #fee2e2;
+    color: #991b1b;
+  }
+  
+  .no-appointments {
+    padding: 40px;
+    text-align: center;
+    color: #64748b;
+    font-size: 1.1em;
+  }
+  
+  /* Responsive Design */
+  @media screen and (max-width: 1024px) {
+    .table-header,
+    .table-row {
+      grid-template-columns: 0.3fr 1.5fr 1fr 0.8fr 1.2fr 0.8fr 1fr;
+      font-size: 0.95em;
+    }
+  }
+  
+  @media screen and (max-width: 768px) {
+    .table-header,
+    .table-row {
+      grid-template-columns: 0.2fr 1.2fr 0.8fr 0.6fr 1fr 0.8fr 0.8fr;
+      font-size: 0.9em;
+      padding: 12px 8px;
+    }
+  
+    .user-info {
+      gap: 2px;
+    }
+  
+    .payment-status,
+    .status {
+      padding: 3px 6px;
+      font-size: 0.85em;
+    }
+  }
+  
+  @media screen and (max-width: 640px) {
+    .doctor-appointments {
+      padding: 10px;
+    }
+  
+    .appointments-table {
+      overflow-x: auto;
+    }
+  
+    .table-header,
+    .table-row {
+      min-width: 800px;
+    }
+  }

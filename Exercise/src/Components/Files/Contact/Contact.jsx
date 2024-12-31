@@ -1,5 +1,5 @@
 import React from 'react'
-import contact from '../assets/contact.jpeg'
+import contact from '../../../assets/contact.jpeg'
 import './contact.css'
 
 const Contact = () => {
@@ -17,7 +17,7 @@ const Contact = () => {
                 <p className="contact-details">Tel:(415) 55-0132<br/>Email:abc123@gmail.com</p>
                 <p className="careers-title">Careers at FITNESSO</p>
                 <p className="careers-description">Lorem ipsum dolor sit amet.</p>
-                <button className="explore-jobs-btn">Explore Jobs</button>
+                {/* <button className="explore-jobs-btn">Explore Jobs</button> */}
             </div>
         </div>
     </div>

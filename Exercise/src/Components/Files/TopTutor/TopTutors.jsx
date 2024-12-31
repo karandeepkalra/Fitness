@@ -441,10 +441,10 @@ const TopTutors = () => {
                 alt={tutor.name} 
                 className="tutor-image"
               />
-              <div className="availability-badge">
-                {/* <input  type="checkbox" checked={tutor.available} /> */}
+              {/* <div className="availability-badge">
+                <input  type="checkbox" checked={tutor.available} />
                 <span>Available</span>
-              </div>
+              </div> */}
             </div>
             <div className="tutor-info">
               <h3>{tutor.name}</h3>

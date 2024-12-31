@@ -1,0 +1,427 @@
+.doctor-profile-container {
+    padding: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .profile-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  .profile-content {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  @media (min-width: 768px) {
+    .profile-content {
+      flex-direction: row;
+    }
+  }
+  
+  .profile-image-section {
+    padding: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  
+  @media (min-width: 768px) {
+    .profile-image-section {
+      width: 33.333%;
+    }
+  }
+  
+  .profile-image {
+    width: 256px;
+    height: 256px;
+    border-radius: 8px;
+    object-fit: cover;
+    background-color: #e6effe;
+  }
+  
+  .profile-details-section {
+    padding: 24px;
+  }
+  
+  @media (min-width: 768px) {
+    .profile-details-section {
+      width: 66.667%;
+    }
+  }
+  
+  .doctor-name {
+    font-size: 32px;
+    font-weight: bold;
+    color: #1a1a1a;
+    margin: 0 0 16px 0;
+  }
+  
+  .qualification-section {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  
+  .qualification {
+    font-size: 18px;
+    color: #4a5568;
+  }
+  
+  .experience-badge {
+    padding: 4px 12px;
+    background-color: #e6effe;
+    color: #2563eb;
+    border-radius: 9999px;
+    font-size: 14px;
+  }
+  
+  .about-section {
+    margin-bottom: 24px;
+  }
+  
+  .about-section h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 8px;
+  }
+  
+  .about-text {
+    color: #4a5568;
+    line-height: 1.6;
+  }
+  
+  .fees-section {
+    margin-bottom: 24px;
+  }
+  
+  .fee-input {
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    padding: 4px 8px;
+    width: 100px;
+  }
+  
+  .fee-amount {
+    font-weight: 600;
+  }
+  
+  .address-section {
+    margin-bottom: 24px;
+  }
+  
+  .address-section h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 8px;
+  }
+  
+  .address-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .address-input {
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    padding: 8px 12px;
+    width: 100%;
+  }
+  
+  .address-text {
+    color: #4a5568;
+    line-height: 1.6;
+  }
+  
+  .availability-section {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+  
+  .availability-checkbox {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .action-section {
+    margin-top: 32px;
+  }
+  
+  .save-button, .edit-button {
+    padding: 8px 24px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .save-button {
+    background-color: #2563eb;
+    color: white;
+  }
+  
+  .save-button:hover {
+    background-color: #1d4ed8;
+  }
+  
+  .edit-button {
+    background-color: #f3f4f6;
+    color: #4b5563;
+  }
+  
+  .edit-button:hover {
+    background-color: #e5e7eb;
+  }
+  input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+  }
+
+  input:disabled {
+    background-color: #f3f4f6;
+    cursor: not-allowed;
+  }
+
+
+  /* 2nd */
+  /* .doctor-profile-container {
+    min-height: 100vh;
+    background-color: #f8f9fa;
+    padding: 2rem;
+  }
+  
+  .profile-wrapper {
+    display: flex;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .sidebar {
+    width: 240px;
+    background: white;
+    border-radius: 12px;
+    padding: 1rem;
+    height: fit-content;
+  }
+  
+  .menu-item {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+  
+  .menu-item.active {
+    background-color: #f0f0ff;
+    color: #6366f1;
+  }
+  
+  .profile-content {
+    flex: 1;
+  }
+  
+  .profile-card {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .profile-header {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .profile-image-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+  }
+  
+  .profile-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    object-fit: cover;
+    background-color: #e8eaf6;
+  }
+  
+  .image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border-radius: 12px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .image-overlay:hover {
+    opacity: 1;
+  }
+  
+  .profile-info {
+    flex: 1;
+  }
+  
+  .doctor-name {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 0.5rem;
+  }
+  
+  .name-input {
+    font-size: 2rem;
+    padding: 0.5rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+  
+  .qualification-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .qualification {
+    font-size: 1.1rem;
+    color: #4b5563;
+  }
+  
+  .experience-badge {
+    background-color: #e8eaf6;
+    color: #6366f1;
+    padding: 0.25rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+  }
+  
+  .profile-details > div {
+    margin-bottom: 1.5rem;
+  }
+  
+  .profile-details h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.5rem;
+  }
+  
+  .about-text {
+    color: #4b5563;
+    line-height: 1.6;
+  }
+  
+  .fee-input,
+  .address-input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+  }
+  
+  .fee-amount {
+    font-size: 1.1rem;
+    color: #1a1a1a;
+    font-weight: 500;
+  }
+  
+  .address-text p {
+    color: #4b5563;
+    margin-bottom: 0.25rem;
+  }
+  
+  .availability-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+  }
+  
+  .availability-checkbox {
+    width: 1rem;
+    height: 1rem;
+    cursor: pointer;
+  }
+  
+  .action-section {
+    margin-top: 2rem;
+  }
+  
+  .save-button,
+  .edit-button {
+    padding: 0.75rem 2rem;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+  }
+  
+  .save-button {
+    background-color: #6366f1;
+    color: white;
+  }
+  
+  .save-button:hover {
+    background-color: #4f46e5;
+  }
+  
+  .edit-button {
+    background-color: #f3f4f6;
+    color: #4b5563;
+  }
+  
+  .edit-button:hover {
+    background-color: #e5e7eb;
+  }
+  
+  input:focus {
+    outline: none;
+    border-color: #6366f1;
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+  }
+  @media (max-width: 768px) {
+    .profile-wrapper {
+      flex-direction: column;
+    }
+  
+    .sidebar {
+      width: 100%;
+    }
+  
+    .profile-header {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  
+    .profile-image-container {
+      width: 150px;
+      height: 150px;
+    }
+  } */

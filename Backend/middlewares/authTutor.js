@@ -13,8 +13,10 @@ const authTutor = (req, res, next) => {
     req.body.tutId = decoded.id; // Attach the user object to the request
     next();
 
+
   } catch (error) {
-    res.status(401).json({ success: false, message: 'Invalid token' });
+    console.log(error)
+    res.json({ success: false, message:error.message });
   }
 };
 

@@ -5,7 +5,8 @@
     font-family: 'Raleway', sans-serif;
 } */
 
-@keyframes gradientBG {
+
+/* @keyframes gradientBG {
     0% {
         background-position: 0% 50%;
     }
@@ -181,4 +182,132 @@
 .create:hover {
     color: #8A7FC3;
     text-decoration: underline;
+} */
+
+
+.bodies {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    padding: 20px;
+}
+
+.bodies > div {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    transition: transform 0.2s ease;
+}
+
+.bodies > div:hover {
+    transform: translateY(-2px);
+}
+
+.main {
+    font-size: 28px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0 0 8px 0;
+    text-align: center;
+}
+
+.ques {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 32px;
+    text-align: center;
+}
+
+.error-message {
+    background-color: #fff2f0;
+    border: 1px solid #ffccc7;
+    color: #ff4d4f;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.name, .email, .pass {
+    margin-bottom: 20px;
+}
+
+input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e6e6e6;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.2s ease;
+}
+
+input:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+input::placeholder {
+    color: #999;
+}
+
+.btn1 {
+    width: 100%;
+    padding: 14px;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-bottom: 20px;
+}
+
+.btn1:hover {
+    background-color: #357abd;
+}
+
+.btn1:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+p {
+    text-align: center;
+    color: #666;
+    margin: 0;
+    font-size: 14px;
+}
+
+.log, .create {
+    color: #4a90e2;
+    cursor: pointer;
+    font-weight: 500;
+    text-decoration: underline;
+    transition: color 0.2s ease;
+}
+
+.log:hover, .create:hover {
+    color: #357abd;
+}
+
+@media (max-width: 480px) {
+    .bodies > div {
+        padding: 24px;
+    }
+    
+    .main {
+        font-size: 24px;
+    }
+    
+    .ques {
+        font-size: 14px;
+    }
 }

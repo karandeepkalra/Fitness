@@ -1,6 +1,6 @@
 import React from 'react'
 import './about.css'
-import about from '../assets/about.webp'
+import about from '../../../assets/about.webp'
 
 const About = () => {
   return (

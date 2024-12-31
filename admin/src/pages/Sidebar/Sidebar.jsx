@@ -18,7 +18,7 @@ const Sidebar = () => {
             <img src={assets.appointment_icon} alt="Appointments" />
             <p>Appointments</p>
           </NavLink>
-          <NavLink to="/doctor-list" className={({ isActive }) => (isActive ? 'active' : '')}>
+          <NavLink to="/doctor-profile" className={({ isActive }) => (isActive ? 'active' : '')}>
             <img src={assets.people_icon} alt="Doctors List" />
             <p>Profile</p>
           </NavLink>

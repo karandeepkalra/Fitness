@@ -1,9 +1,17 @@
 import validator from 'validator';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import Razorpay from 'razorpay';
 import UserModel from '../models/UserModel.js';
 import TutorModel from '../models/TutorModel.js';
 import appointmentModel from '../models/appointmentModel.js';
+import crypto from 'crypto';
+
+// Initialize Razorpay
+const razorpayInstance = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID,
+  key_secret: process.env.RAZORPAY_KEY_SECRET
+});
 
 // Sign Up
 const addUser = async (req, res) => {
@@ -174,7 +182,146 @@ const listAppointment = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
-export { addUser, loginUser, getProfile, updateProfile, bookAppointment, listAppointment };
+
+const paymRazorpay = async (req, res) => {
+  try {
+    const { appointmentId } = req.body;
+    
+    console.log('Payment request received for appointment:', appointmentId);
+
+    if (!appointmentId) {
+      return res.status(400).json({ 
+        success: false, 
+        message: "Appointment ID is required" 
+      });
+    }
+
+    const appointmentData = await appointmentModel.findById(appointmentId);
+    
+    if (!appointmentData) {
+      return res.status(404).json({ 
+        success: false, 
+        message: "Appointment not found" 
+      });
+    }
+
+    if (appointmentData.cancelled) {
+      return res.status(400).json({ 
+        success: false, 
+        message: "Appointment is cancelled" 
+      });
+    }
+
+    if (!appointmentData.amount) {
+      return res.status(400).json({ 
+        success: false, 
+        message: "Invalid appointment amount" 
+      });
+    }
+
+    const options = {
+      amount: Math.round(appointmentData.amount * 100),
+      currency: 'INR',
+      receipt: `rcpt_${appointmentId}`
+    };
+
+    const order = await razorpayInstance.orders.create(options);
+
+    if (!order) {
+      return res.status(500).json({ 
+        success: false, 
+        message: "Failed to create payment order" 
+      });
+    }
+
+    return res.status(200).json({ 
+      success: true, 
+      order,
+      amount: options.amount,
+      currency: options.currency,
+      appointmentId
+    });
+
+  } catch (error) {
+    console.error('Payment error:', error);
+    return res.status(500).json({ 
+      success: false, 
+      message: error.message || "Payment initialization failed" 
+    });
+  }
+};
+
+const verifyRazorpay = async (req, res) => {
+  try {
+    const { 
+      razorpay_order_id, 
+      razorpay_payment_id, 
+      razorpay_signature,
+      appointmentId 
+    } = req.body;
+
+    // Validate all required fields
+    if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature || !appointmentId) {
+      return res.status(400).json({
+        success: false,
+        message: "Missing required payment verification fields"
+      });
+    }
+
+    // Create signature verification data
+    const body = razorpay_order_id + "|" + razorpay_payment_id;
+    
+    // Verify signature
+    const expectedSignature = crypto
+      .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
+      .update(body.toString())
+      .digest("hex");
+
+    // Compare signatures
+    const isAuthentic = expectedSignature === razorpay_signature;
+
+    if (!isAuthentic) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid payment signature"
+      });
+    }
+
+    // Update appointment payment status
+    const updatedAppointment = await appointmentModel.findByIdAndUpdate(
+      appointmentId,
+      { 
+        payment: true,
+        paymentId: razorpay_payment_id,
+        orderId: razorpay_order_id
+      },
+      { new: true }
+    );
+
+    if (!updatedAppointment) {
+      return res.status(404).json({
+        success: false,
+        message: "Appointment not found"
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Payment verified successfully",
+      appointment: updatedAppointment
+    });
+    
+  } catch (error) {
+    console.error('Verification error:', error);
+    return res.status(500).json({
+      success: false,
+      message: error.message || "Payment verification failed"
+    });
+  }
+};
+
+
+export { addUser, loginUser, getProfile, updateProfile, bookAppointment, listAppointment,paymRazorpay,verifyRazorpay };
 
 
 

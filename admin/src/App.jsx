@@ -7,7 +7,7 @@ import Navbar from './pages/Navbar/Navbar';
 import Sidebar from './pages/Sidebar/Sidebar';
 import Dashboard from './pages/Doctor/Dashboard';
 import DoctorAppointments from './pages/Doctor/DoctorAppointments';
-import DoctorList from './pages/Doctor/DoctorList';
+import DoctorProfile from './pages/Doctor/DoctorProfile';
 import Login from './pages/login/login';
 import { AppContext } from './context/AppContext';
 import 'react-toastify/dist/ReactToastify.css';
@@ -35,7 +35,7 @@ const App = () => {
             <Route path="/" element={<Dashboard />} />
             <Route path="/doctor-dashboard" element={<Dashboard />} />
             <Route path="/doctor-appointments" element={<DoctorAppointments />} />
-            <Route path="/doctor-list" element={<DoctorList />} />
+            <Route path="/doctor-profile" element={<DoctorProfile />} />
           </Routes>
         </div>
       </div>

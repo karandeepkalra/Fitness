@@ -6,6 +6,8 @@ import fs from 'fs'
 import mongoose from 'mongoose'
 import jwt from 'jsonwebtoken'
 import appointmentModel from "../models/appointmentModel.js"
+ 
+import { toNamespacedPath } from "path"
 
 
 const addTutor = async (req, res) => {
@@ -185,75 +187,161 @@ const addTutor = async (req, res) => {
           res.json({success:false,message:error.message})
       }
     }
-
+   
     const getTutorById = async (req, res) => {
       try {
         const { id } = req.params;
+    
+        // Validate ObjectId
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+          return res.status(400).json({ success: false, message: "Invalid tutor ID" });
+        }
+    
         const tutor = await TutorModel.findById(id).select("-password");
         if (!tutor) {
           return res.status(404).json({ success: false, message: "Tutor not found" });
         }
+    
         res.status(200).json(tutor);
       } catch (error) {
         console.error("Error fetching tutor by ID:", error);
         res.status(500).json({ success: false, message: "Internal server error" });
       }
     };
-  
 
-    // api to get tutor appointments for tutor panel
-    const appointmentsTutor= async(req,res)=>{
-      try{
-           const {tutId} = req.body
-           const appointments = await appointmentModel.find({tutId})
-
-           res.json({succes:true,message:appointments})
-      }
-      catch(error)
-      {
-        console.log(error);
-        res.json({succes:false,message:error.message})
-      }
+const appointmentsTutor = async (req, res) => {
+  try {
+    const { tutId } = req.body;
+    if (!tutId) {
+      return res.status(400).json({ success: false, message: "Tutor ID is required" });
     }
 
+    // Fetch appointments and populate user data
+    const appointments = await appointmentModel.find({ tutId })
+      .populate('userId', 'name email dob') // Populate user details
+      .sort({ date: -1 });
 
-    const tutorDashboard = async(req,res)=>{
-       try{
-         const {tutId} = req.body
-         const appointments = await appointmentModel.find({tutId})
+    // Calculate age for each appointment's user
+    const appointmentsWithAge = appointments.map(appointment => {
+      const dob = appointment.userId?.dob;
+      let age = 'N/A';
+      
+      if (dob) {
+        const birthDate = new Date(dob);
+        const today = new Date();
+        age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+        
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+          age--;
+        }
+      }
 
-         let earnings = 0
-         appointments.map((item)=>{
-          if(item.isCompleted || item.payment)
-          {
-             earnings+=item.amount
-          }
-         })
+      return {
+        ...appointment.toObject(),
+        userData: {
+          name: appointment.userId?.name || 'N/A',
+          email: appointment.userId?.email || 'N/A',
+          age
+        }
+      };
+    });
 
-         let patients = []
-         appointments.map((item)=>{
-            if(!patients.includes(item.userId))
-            {
-              patients.push(item.userId)
-            }
-         })
+    res.status(200).json({ success: true, appointments: appointmentsWithAge });
+  } catch (error) {
+    console.error("Error fetching appointments:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
 
-         const dashData={
-          earnings,
-          appintments: appointments.length,
-          patients:patients.length,
-          latestAppointments:appointments.reverse().slice(0,5)
-         }
+const tutorDashboard = async(req,res)=>{
+  try{
+    const {tutId} = req.body
+    const appointments = await appointmentModel.find({tutId})
+      .populate('tutId', 'name image')
+      .populate('userId', 'name') // Add this line to populate user details
 
-         res.json({success:true,dashData})
+    let earnings = 0
+    appointments.map((item)=>{
+     if(item.isCompleted || item.payment)
+     {
+        earnings+=item.amount
+     }
+    })
 
-       } 
-       catch(error)
+    let patients = []
+    appointments.map((item)=>{
+       if(!patients.includes(item.userId))
        {
-          console.log(error);
-          res.json({succes:false,message:error.message})
+         patients.push(item.userId)
        }
+    })
 
+    // Map appointments to include all required data
+    const appointmentsWithData = appointments.map(item => ({
+      ...item.toObject(),
+      tutorData: {
+        name: item.tutId?.name || 'N/A',
+        image: item.tutId?.image || null
+      },
+      userData: {
+        name: item.userId?.name || 'N/A'
+      },
+      bookingDateTime: item.slotDate ? new Date(item.slotDate) : null,
+      paymentStatus: item.payment ? 'Paid' : 'Pending'
+    }));
+
+    const dashData={
+     earnings,
+     appointments: appointments.length,
+     patients: patients.length,
+     latestAppointments: appointmentsWithData.reverse().slice(0,5)
     }
-  
-  export { addTutor , loginTutor,allTutors, tutorList,getTutorById, appointmentsTutor,tutorDashboard};
+
+    res.json({success:true, dashData})
+  } 
+  catch(error)
+  {
+     console.log(error);
+     res.json({success:false, message:error.message})
+  }
+}
+
+// api to get doctor profile for tutor panel
+const tutorProfile = async(req, res)=>{
+  try{
+
+     const {tutId} =  req.body
+     const profileData = await TutorModel.findById(tutId).select('-password')
+     
+     res.json({success:true,profileData})
+  }
+  catch(error)
+  {
+    console.log(error);
+    res.json({success:false, message:error.message})
+
+  }
+}
+
+// api to update tutor profile data from tutor panel
+const updateTutorProfile = async (req,res)=>{
+  try{
+     const {tutId,fees,address,available} = req.body
+
+     await TutorModel.findByIdAndUpdate(tutId,{fees,address,available})
+     res.json({success:true,message:"Profile updated"})
+  }
+  catch(error)
+  {
+    console.log(error);
+    res.json({success:false, message:'Profile updated'})
+
+  }
+}
+
+  export { addTutor , loginTutor,allTutors, tutorList,getTutorById, appointmentsTutor, tutorDashboard,tutorProfile,updateTutorProfile};
+
+
+
+

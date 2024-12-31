@@ -1,8 +1,9 @@
+
 import React from 'react'
-import Header from '../Components/Files/Header/Header'
-import SpecialityMenu from '../Components/SpecialityMenu'
-import Banner from '../Components/Banner'
-import Footer from '../Components/Files/Footer/Footer'
+import Header from '../components/Header'
+import SpecialityMenu from '../components/SpecialityMenu'
+import Banner from '../components/Banner'
+import Footer from '../components/Footer'
 import TopTutors from '../Components/Files/TopTutor/TopTutors'
 
 const Home = () => {

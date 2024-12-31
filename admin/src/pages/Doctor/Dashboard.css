@@ -1,0 +1,502 @@
+/* 
+ .dashboard-container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+    font-size: 1.2rem;
+    color: #666;
+  }
+  
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .stat-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .stat-card:hover {
+    transform: translateY(-2px);
+  }
+  
+  
+  .stat-icon {
+    padding: 12px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .icon-earnings {
+    background-color: rgba(52, 211, 153, 0.1);
+    color: #34D399;
+  }
+  
+  .icon-appointments {
+    background-color: rgba(99, 102, 241, 0.1);
+    color: #6366F1;
+  }
+  
+  .icon-patients {
+    background-color: rgba(249, 115, 22, 0.1);
+    color: #F97316;
+  }
+  
+  .stat-content {
+    flex-grow: 1;
+  }
+  
+  .stat-value {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+    color: #111827;
+  }
+  
+  .stat-label {
+    font-size: 0.875rem;
+    color: #6B7280;
+    margin: 0;
+  }
+  
+.bookings-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .bookings-header {
+    margin-bottom: 1.5rem;
+    padding: 0 1rem;
+  }
+  
+  .bookings-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #111827;
+    margin: 0;
+  }
+  
+  .bookings-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .booking-item {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    background-color: #F9FAFB;
+    transition: background-color 0.2s ease;
+  }
+  
+  .booking-item:hover {
+    background-color: #F3F4F6;
+  }
+  
+  .booking-content {
+    display: flex;
+    width: 100%;
+  }
+  
+  .booking-info {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .user-info {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .names-container {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    min-width: 400px;
+  }
+  
+  .doctor-name {
+    font-weight: 600;
+    color: #111827;
+    margin: 0;
+    min-width: 150px;
+  }
+  
+  .patient-name {
+    color: #6B7280;
+    margin: 0;
+    min-width: 150px;
+  }
+  
+  .appointment-details {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-left: auto;
+  }
+  
+  .booking-datetime {
+    color: #6B7280;
+    margin: 0;
+    min-width: 200px;
+    text-align: right;
+  }
+  
+  .payment-status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin: 0;
+    min-width: 80px;
+    text-align: center;
+  }
+  
+  .payment-status.paid {
+    background-color: rgba(52, 211, 153, 0.1);
+    color: #34D399;
+  }
+  
+  .payment-status.pending {
+    background-color: rgba(245, 158, 11, 0.1);
+    color: #F59E0B;
+  }
+  
+  .payment-status.failed {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #EF4444;
+  }
+  
+  @media (max-width: 968px) {
+    .names-container {
+      min-width: unset;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+  
+    .doctor-name,
+    .patient-name {
+      min-width: unset;
+    }
+  
+    .booking-info {
+      flex-direction: column;
+      gap: 1rem;
+    }
+  
+    .appointment-details {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+      margin-left: 0;
+    }
+  
+    .booking-datetime {
+      text-align: left;
+      min-width: unset;
+    }
+  } */
+
+
+  /* Dashboard Container stays the same */
+.dashboard-container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Previous Loading and Stats styles remain unchanged */
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+    font-size: 1.2rem;
+    color: #666;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* Previous Stat Cards styles remain unchanged */
+.stat-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: transform 0.2s ease-in-out;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+}
+
+/* Previous Stat Icons styles remain unchanged */
+.stat-icon {
+    padding: 12px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-earnings {
+    background-color: rgba(52, 211, 153, 0.1);
+    color: #34D399;
+}
+
+.icon-appointments {
+    background-color: rgba(99, 102, 241, 0.1);
+    color: #6366F1;
+}
+
+.icon-patients {
+    background-color: rgba(249, 115, 22, 0.1);
+    color: #F97316;
+}
+
+/* Previous Stat Content styles remain unchanged */
+.stat-content {
+    flex-grow: 1;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+    color: #111827;
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: #6B7280;
+    margin: 0;
+}
+
+/* Updated Bookings Section */
+.bookings-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.bookings-header {
+    margin-bottom: 1rem;
+    padding: 0 0.5rem;
+}
+
+.bookings-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #111827;
+    margin: 0;
+}
+
+/* Updated Bookings List */
+.bookings-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.booking-item {
+    padding: 0.75rem;
+    border-radius: 8px;
+    background-color: #F9FAFB;
+    transition: background-color 0.2s ease;
+}
+
+.booking-content {
+    display: flex;
+    width: 100%;
+}
+
+.booking-info {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+/* Updated User Info Styles */
+.user-info {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex: 1;
+}
+
+.names-container {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex: 1;
+}
+
+.doctor-name {
+    font-weight: 600;
+    color: #111827;
+    margin: 0;
+    min-width: 120px;
+}
+
+.patient-name {
+    color: #6B7280;
+    margin: 0;
+    min-width: 120px;
+}
+
+/* Updated Appointment Details */
+.appointment-details {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    white-space: nowrap;
+}
+
+.booking-datetime {
+    color: #6B7280;
+    margin: 0;
+    min-width: 150px;
+    text-align: right;
+}
+
+/* Payment Status Styles */
+.payment-status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin: 0;
+    min-width: 80px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.payment-status.paid {
+    background-color: rgba(52, 211, 153, 0.1);
+    color: #34D399;
+}
+
+.payment-status.pending {
+    background-color: rgba(245, 158, 11, 0.1);
+    color: #F59E0B;
+}
+
+.payment-status.failed {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #EF4444;
+}
+
+/* Enhanced Responsive Design */
+@media (max-width: 1200px) {
+    .names-container {
+        gap: 0.75rem;
+    }
+    
+    .doctor-name,
+    .patient-name {
+        min-width: 100px;
+    }
+}
+
+@media (max-width: 968px) {
+    .booking-info {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .names-container {
+        flex-direction: row;
+        gap: 1rem;
+        min-width: unset;
+    }
+
+    .doctor-name,
+    .patient-name {
+        min-width: unset;
+        flex: 1;
+    }
+
+    .appointment-details {
+        width: 100%;
+        justify-content: space-between;
+        margin-left: 0;
+    }
+
+    .booking-datetime {
+        text-align: left;
+        min-width: unset;
+    }
+}
+
+@media (max-width: 640px) {
+    .dashboard-container {
+        padding: 1rem;
+    }
+
+    .bookings-card {
+        padding: 1rem;
+    }
+
+    .names-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .appointment-details {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .booking-datetime {
+        font-size: 0.875rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .booking-item {
+        padding: 0.75rem 0.5rem;
+    }
+    
+    .doctor-name,
+    .patient-name {
+        font-size: 0.875rem;
+    }
+}
