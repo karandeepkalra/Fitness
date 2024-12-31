@@ -183,6 +183,7 @@ const listAppointment = async (req, res) => {
   }
 };
 
+
 const paymRazorpay = async (req, res) => {
   try {
     const { appointmentId } = req.body;
@@ -322,6 +323,12 @@ const verifyRazorpay = async (req, res) => {
 
 
 export { addUser, loginUser, getProfile, updateProfile, bookAppointment, listAppointment,paymRazorpay,verifyRazorpay };
+
+
+
+
+
+
 
 
 

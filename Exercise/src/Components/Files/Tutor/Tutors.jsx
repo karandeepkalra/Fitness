@@ -1,5 +1,3 @@
-
-// running 
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import './Tutor.css';
@@ -92,5 +90,4 @@ const Tutors = () => {
 };
 
 export default Tutors;
-
 

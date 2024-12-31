@@ -52,6 +52,7 @@ import {
 } from '../controllers/UserController.js';
 import authUser from '../middlewares/authUser.js';
 
+
 const router = express.Router();
 
 // Sign Up Route
