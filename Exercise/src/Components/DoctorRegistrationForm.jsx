@@ -101,6 +101,9 @@ const DoctorRegistrationForm = () => {
     specialization: '',
   });
 
+  const backendUrl= import.meta.env.VITE_BACKEND_URL
+ 
+
   // Handle form input changes
   const handleChange = (e) => {
     setFormData({
@@ -109,13 +112,14 @@ const DoctorRegistrationForm = () => {
     });
   };
 
+
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Form submitted:', formData);
 
     try {
-      const response = await fetch('http://localhost:4000/doctor/register', {
+      const response = await fetch(`${backendUrl}/tutor/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

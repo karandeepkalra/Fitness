@@ -6,7 +6,6 @@ import UserModel from '../models/UserModel.js';
 import TutorModel from '../models/TutorModel.js';
 import appointmentModel from '../models/appointmentModel.js';
 import crypto from 'crypto';
-
 // Initialize Razorpay
 const razorpayInstance = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
@@ -168,10 +167,10 @@ const listAppointment = async (req, res) => {
   try {
     // Get userId from auth middleware instead of req.body
     const userId = req.user.id;
-    
+
     const appointments = await appointmentModel.find({ userId })
       .sort({ date: -1 }); // Sort by date in descending order
-    
+
     if (!appointments) {
       return res.status(404).json({ success: false, message: "No appointments found" });
     }
@@ -182,21 +181,17 @@ const listAppointment = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
-
-
 const paymRazorpay = async (req, res) => {
   try {
     const { appointmentId } = req.body;
     
     console.log('Payment request received for appointment:', appointmentId);
-
     if (!appointmentId) {
       return res.status(400).json({ 
         success: false, 
         message: "Appointment ID is required" 
       });
     }
-
     const appointmentData = await appointmentModel.findById(appointmentId);
     
     if (!appointmentData) {
@@ -205,36 +200,30 @@ const paymRazorpay = async (req, res) => {
         message: "Appointment not found" 
       });
     }
-
     if (appointmentData.cancelled) {
       return res.status(400).json({ 
         success: false, 
         message: "Appointment is cancelled" 
       });
     }
-
     if (!appointmentData.amount) {
       return res.status(400).json({ 
         success: false, 
         message: "Invalid appointment amount" 
       });
     }
-
     const options = {
       amount: Math.round(appointmentData.amount * 100),
       currency: 'INR',
       receipt: `rcpt_${appointmentId}`
     };
-
     const order = await razorpayInstance.orders.create(options);
-
     if (!order) {
       return res.status(500).json({ 
         success: false, 
         message: "Failed to create payment order" 
       });
     }
-
     return res.status(200).json({ 
       success: true, 
       order,
@@ -242,7 +231,6 @@ const paymRazorpay = async (req, res) => {
       currency: options.currency,
       appointmentId
     });
-
   } catch (error) {
     console.error('Payment error:', error);
     return res.status(500).json({ 
@@ -251,7 +239,6 @@ const paymRazorpay = async (req, res) => {
     });
   }
 };
-
 const verifyRazorpay = async (req, res) => {
   try {
     const { 
@@ -260,7 +247,6 @@ const verifyRazorpay = async (req, res) => {
       razorpay_signature,
       appointmentId 
     } = req.body;
-
     // Validate all required fields
     if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature || !appointmentId) {
       return res.status(400).json({
@@ -268,7 +254,6 @@ const verifyRazorpay = async (req, res) => {
         message: "Missing required payment verification fields"
       });
     }
-
     // Create signature verification data
     const body = razorpay_order_id + "|" + razorpay_payment_id;
     
@@ -277,17 +262,14 @@ const verifyRazorpay = async (req, res) => {
       .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
       .update(body.toString())
       .digest("hex");
-
     // Compare signatures
     const isAuthentic = expectedSignature === razorpay_signature;
-
     if (!isAuthentic) {
       return res.status(400).json({
         success: false,
         message: "Invalid payment signature"
       });
     }
-
     // Update appointment payment status
     const updatedAppointment = await appointmentModel.findByIdAndUpdate(
       appointmentId,
@@ -298,14 +280,12 @@ const verifyRazorpay = async (req, res) => {
       },
       { new: true }
     );
-
     if (!updatedAppointment) {
       return res.status(404).json({
         success: false,
         message: "Appointment not found"
       });
     }
-
     return res.status(200).json({
       success: true,
       message: "Payment verified successfully",
@@ -320,11 +300,7 @@ const verifyRazorpay = async (req, res) => {
     });
   }
 };
-
-
 export { addUser, loginUser, getProfile, updateProfile, bookAppointment, listAppointment,paymRazorpay,verifyRazorpay };
-
-
 
 
 

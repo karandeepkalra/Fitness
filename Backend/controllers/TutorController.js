@@ -14,34 +14,34 @@ const addTutor = async (req, res) => {
     try {
       const { name, email, password, speciality, degree, experience, about, fees, address } = req.body;
       const imageFile = req.file;
-  
+
       // Validate required fields
       if (!imageFile) {
         return res.status(400).json({ success: false, message: "Image file is required" });
       }
-  
+
       if (!name || !email || !password || !speciality || !degree || !experience || !about || !fees || !address) {
         return res.status(400).json({ success: false, message: "Missing details" });
       }
-  
+
       if (!validator.isEmail(email)) {
         return res.status(400).json({ success: false, message: "Please enter a valid email" });
       }
-  
+
       if (password.length < 8) {
         return res.status(400).json({ success: false, message: "Password must be at least 8 characters long" });
       }
-  
+
       // Check if email already exists
       const existingTutor = await TutorModel.findOne({ email });
       if (existingTutor) {
         return res.status(400).json({ success: false, message: "Email already registered" });
       }
-  
+
       // Hash the password
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
-  
+
       // Parse address
       let parsedAddress;
       try {
@@ -49,7 +49,7 @@ const addTutor = async (req, res) => {
       } catch (e) {
         return res.status(400).json({ success: false, message: "Invalid address format" });
       }
-  
+
       // Upload image to Cloudinary
       const imageUpload = await cloudinary.uploader.upload(imageFile.path, {
         folder: 'tutors',
@@ -57,7 +57,7 @@ const addTutor = async (req, res) => {
         allowed_formats: ['jpg', 'png', 'jpeg', 'gif'],
         transformation: [{ quality: 'auto:good', fetch_format: 'auto' }],
       });
-  
+
       // Create tutor object
       const tutorData = {
         name,
@@ -72,19 +72,19 @@ const addTutor = async (req, res) => {
         address: parsedAddress,
         date: Date.now(),
       };
-  
+
       // Save to database
       const newTutor = new TutorModel(tutorData);
       await newTutor.save();
-  
+
       // Generate JWT token
       const token = jwt.sign({ id: newTutor._id }, process.env.JWT_SECRET || 'default_secret_key', { expiresIn: '1h' });
-  
+
       // Remove the uploaded file from local storage
       if (fs.existsSync(imageFile.path)) {
         fs.unlinkSync(imageFile.path);
       }
-  
+
       return res.status(201).json({
         success: true,
         message: "Tutor registered successfully",
@@ -103,12 +103,12 @@ const addTutor = async (req, res) => {
       });
     } catch (error) {
       console.error("Error in addTutor:", error);
-  
+
       // Remove uploaded file on error
       if (req.file && fs.existsSync(req.file.path)) {
         fs.unlinkSync(req.file.path);
       }
-  
+
       return res.status(500).json({ success: false, message: "Internal server error. Please try again later." });
     }
   };
@@ -117,27 +117,27 @@ const addTutor = async (req, res) => {
   const loginTutor = async (req, res) => {
     try {
       const { email, password } = req.body;
-  
+
       // Validate input
       if (!email || !password) {
         return res.status(400).json({ success: false, message: 'Email and password are required' });
       }
-  
+
       // Check if tutor exists
       const tutor = await TutorModel.findOne({ email });
       if (!tutor) {
         return res.status(404).json({ success: false, message: 'Tutor not found' });
       }
-  
+
       // Compare passwords
       const isMatch = await bcrypt.compare(password, tutor.password);
       if (!isMatch) {
         return res.status(401).json({ success: false, message: 'Incorrect password' });
       }
-  
+
       // Generate JWT token
       const token = jwt.sign({ id: tutor._id }, process.env.JWT_SECRET || 'default_secret_key', { expiresIn: '1h' });
-  
+
       return res.status(200).json({
         success: true,
         message: 'Login successful',
@@ -220,7 +220,6 @@ const appointmentsTutor = async (req, res) => {
     const appointments = await appointmentModel.find({ tutId })
       .populate('userId', 'name email dob') // Populate user details
       .sort({ date: -1 });
-
     // Calculate age for each appointment's user
     const appointmentsWithAge = appointments.map(appointment => {
       const dob = appointment.userId?.dob;
@@ -253,7 +252,6 @@ const appointmentsTutor = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
-
 const tutorDashboard = async(req,res)=>{
   try{
     const {tutId} = req.body
@@ -290,14 +288,12 @@ const tutorDashboard = async(req,res)=>{
       bookingDateTime: item.slotDate ? new Date(item.slotDate) : null,
       paymentStatus: item.payment ? 'Paid' : 'Pending'
     }));
-
     const dashData={
      earnings,
      appointments: appointments.length,
      patients: patients.length,
      latestAppointments: appointmentsWithData.reverse().slice(0,5)
     }
-
     res.json({success:true, dashData})
   } 
   catch(error)
@@ -306,11 +302,9 @@ const tutorDashboard = async(req,res)=>{
      res.json({success:false, message:error.message})
   }
 }
-
 // api to get doctor profile for tutor panel
 const tutorProfile = async(req, res)=>{
   try{
-
      const {tutId} =  req.body
      const profileData = await TutorModel.findById(tutId).select('-password')
      
@@ -320,15 +314,12 @@ const tutorProfile = async(req, res)=>{
   {
     console.log(error);
     res.json({success:false, message:error.message})
-
   }
 }
-
 // api to update tutor profile data from tutor panel
 const updateTutorProfile = async (req,res)=>{
   try{
      const {tutId,fees,address,available} = req.body
-
      await TutorModel.findByIdAndUpdate(tutId,{fees,address,available})
      res.json({success:true,message:"Profile updated"})
   }
@@ -336,12 +327,8 @@ const updateTutorProfile = async (req,res)=>{
   {
     console.log(error);
     res.json({success:false, message:'Profile updated'})
-
   }
 }
-
   export { addTutor , loginTutor,allTutors, tutorList,getTutorById, appointmentsTutor, tutorDashboard,tutorProfile,updateTutorProfile};
-
-
 
 
