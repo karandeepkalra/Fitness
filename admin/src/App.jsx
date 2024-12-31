@@ -24,17 +24,6 @@ const App = () => {
     );
   }
 
-  const { token } = useContext(AppContext);
-
-  if (!token) {
-    return (
-      <>
-        <Login />
-        <ToastContainer />
-      </>
-    );
-  }
-
   return (
     <div>
       <ToastContainer />
@@ -54,8 +43,5 @@ const App = () => {
     </div>
   );
 };
-  );
-};
 
-export default App;
 export default App;
