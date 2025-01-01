@@ -10,109 +10,224 @@ import appointmentModel from "../models/appointmentModel.js"
 import { toNamespacedPath } from "path"
 
 
+// correct working code
+// const addTutor = async (req, res) => {
+//     try {
+//       const { name, email, password, speciality, degree, experience, about, fees, address } = req.body;
+//       const imageFile = req.file;
+
+//       // Validate required fields
+//       if (!imageFile) {
+//         return res.status(400).json({ success: false, message: "Image file is required" });
+//       }
+
+//       if (!name || !email || !password || !speciality || !degree || !experience || !about || !fees || !address) {
+//         return res.status(400).json({ success: false, message: "Missing details" });
+//       }
+
+//       if (!validator.isEmail(email)) {
+//         return res.status(400).json({ success: false, message: "Please enter a valid email" });
+//       }
+
+//       if (password.length < 8) {
+//         return res.status(400).json({ success: false, message: "Password must be at least 8 characters long" });
+//       }
+
+//       // Check if email already exists
+//       const existingTutor = await TutorModel.findOne({ email });
+//       if (existingTutor) {
+//         return res.status(400).json({ success: false, message: "Email already registered" });
+//       }
+
+//       // Hash the password
+//       const salt = await bcrypt.genSalt(10);
+//       const hashedPassword = await bcrypt.hash(password, salt);
+
+//       // Parse address
+//       let parsedAddress;
+//       try {
+//         parsedAddress = typeof address === 'string' ? JSON.parse(address) : address;
+//       } catch (e) {
+//         return res.status(400).json({ success: false, message: "Invalid address format" });
+//       }
+
+//       // Upload image to Cloudinary
+//       const imageUpload = await cloudinary.uploader.upload(imageFile.path, {
+//         folder: 'tutors',
+//         resource_type: 'auto',
+//         allowed_formats: ['jpg', 'png', 'jpeg', 'gif'],
+//         transformation: [{ quality: 'auto:good', fetch_format: 'auto' }],
+//       });
+
+//       // Create tutor object
+//       const tutorData = {
+//         name,
+//         email,
+//         image: imageUpload.secure_url,
+//         password: hashedPassword,
+//         speciality,
+//         degree,
+//         experience,
+//         about,
+//         fees: Number(fees),
+//         address: parsedAddress,
+//         date: Date.now(),
+//       };
+
+//       // Save to database
+//       const newTutor = new TutorModel(tutorData);
+//       await newTutor.save();
+
+//       // Generate JWT token
+//       const token = jwt.sign({ id: newTutor._id }, process.env.JWT_SECRET || 'default_secret_key', { expiresIn: '1h' });
+
+//       // Remove the uploaded file from local storage
+//       if (fs.existsSync(imageFile.path)) {
+//         fs.unlinkSync(imageFile.path);
+//       }
+
+//       return res.status(201).json({
+//         success: true,
+//         message: "Tutor registered successfully",
+//         token,
+//         tutor: {
+//           name: newTutor.name,
+//           email: newTutor.email,
+//           image: newTutor.image,
+//           speciality: newTutor.speciality,
+//           degree: newTutor.degree,
+//           experience: newTutor.experience,
+//           about: newTutor.about,
+//           fees: newTutor.fees,
+//           address: newTutor.address,
+//         },
+//       });
+//     } catch (error) {
+//       console.error("Error in addTutor:", error);
+
+//       // Remove uploaded file on error
+//       if (req.file && fs.existsSync(req.file.path)) {
+//         fs.unlinkSync(req.file.path);
+//       }
+
+//       return res.status(500).json({ success: false, message: "Internal server error. Please try again later." });
+//     }
+//   };
+
+
 const addTutor = async (req, res) => {
+  try {
+    const { name, email, password, speciality, degree, experience, about, fees, address } = req.body;
+    const imageFile = req.file;
+
+    // Validate required fields
+    if (!imageFile) {
+      return res.status(400).json({ success: false, message: "Image file is required" });
+    }
+
+    // Create uploads directory if it doesn't exist
+    const uploadsDir = 'uploads';
+    if (!fs.existsSync(uploadsDir)) {
+      fs.mkdirSync(uploadsDir);
+    }
+
+    // Additional validation for address
+    let parsedAddress;
     try {
-      const { name, email, password, speciality, degree, experience, about, fees, address } = req.body;
-      const imageFile = req.file;
+      parsedAddress = typeof address === 'string' ? JSON.parse(address) : address;
+    } catch (e) {
+      // If address parsing fails, create a default structure
+      parsedAddress = {
+        line1: address || '',
+        line2: ''
+      };
+    }
 
-      // Validate required fields
-      if (!imageFile) {
-        return res.status(400).json({ success: false, message: "Image file is required" });
-      }
-
-      if (!name || !email || !password || !speciality || !degree || !experience || !about || !fees || !address) {
-        return res.status(400).json({ success: false, message: "Missing details" });
-      }
-
-      if (!validator.isEmail(email)) {
-        return res.status(400).json({ success: false, message: "Please enter a valid email" });
-      }
-
-      if (password.length < 8) {
-        return res.status(400).json({ success: false, message: "Password must be at least 8 characters long" });
-      }
-
-      // Check if email already exists
-      const existingTutor = await TutorModel.findOne({ email });
-      if (existingTutor) {
-        return res.status(400).json({ success: false, message: "Email already registered" });
-      }
-
-      // Hash the password
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(password, salt);
-
-      // Parse address
-      let parsedAddress;
-      try {
-        parsedAddress = typeof address === 'string' ? JSON.parse(address) : address;
-      } catch (e) {
-        return res.status(400).json({ success: false, message: "Invalid address format" });
-      }
-
-      // Upload image to Cloudinary
-      const imageUpload = await cloudinary.uploader.upload(imageFile.path, {
+    // Upload to Cloudinary with error handling
+    let imageUploadResult;
+    try {
+      imageUploadResult = await cloudinary.uploader.upload(imageFile.path, {
         folder: 'tutors',
         resource_type: 'auto',
         allowed_formats: ['jpg', 'png', 'jpeg', 'gif'],
         transformation: [{ quality: 'auto:good', fetch_format: 'auto' }],
       });
-
-      // Create tutor object
-      const tutorData = {
-        name,
-        email,
-        image: imageUpload.secure_url,
-        password: hashedPassword,
-        speciality,
-        degree,
-        experience,
-        about,
-        fees: Number(fees),
-        address: parsedAddress,
-        date: Date.now(),
-      };
-
-      // Save to database
-      const newTutor = new TutorModel(tutorData);
-      await newTutor.save();
-
-      // Generate JWT token
-      const token = jwt.sign({ id: newTutor._id }, process.env.JWT_SECRET || 'default_secret_key', { expiresIn: '1h' });
-
-      // Remove the uploaded file from local storage
-      if (fs.existsSync(imageFile.path)) {
-        fs.unlinkSync(imageFile.path);
-      }
-
-      return res.status(201).json({
-        success: true,
-        message: "Tutor registered successfully",
-        token,
-        tutor: {
-          name: newTutor.name,
-          email: newTutor.email,
-          image: newTutor.image,
-          speciality: newTutor.speciality,
-          degree: newTutor.degree,
-          experience: newTutor.experience,
-          about: newTutor.about,
-          fees: newTutor.fees,
-          address: newTutor.address,
-        },
+    } catch (uploadError) {
+      console.error('Cloudinary upload error:', uploadError);
+      return res.status(500).json({ 
+        success: false, 
+        message: "Error uploading image to cloud storage" 
       });
-    } catch (error) {
-      console.error("Error in addTutor:", error);
-
-      // Remove uploaded file on error
-      if (req.file && fs.existsSync(req.file.path)) {
-        fs.unlinkSync(req.file.path);
-      }
-
-      return res.status(500).json({ success: false, message: "Internal server error. Please try again later." });
     }
-  };
 
+    // Hash password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    // Create tutor object
+    const tutorData = {
+      name,
+      email,
+      image: imageUploadResult.secure_url,
+      password: hashedPassword,
+      speciality,
+      degree,
+      experience,
+      about,
+      fees: Number(fees),
+      address: parsedAddress,
+      date: Date.now(),
+    };
+
+    // Save to database
+    const newTutor = new TutorModel(tutorData);
+    await newTutor.save();
+
+    // Clean up uploaded file
+    fs.unlink(imageFile.path, (err) => {
+      if (err) console.error('Error deleting uploaded file:', err);
+    });
+
+    // Generate token and send response
+    const token = jwt.sign(
+      { id: newTutor._id }, 
+      process.env.JWT_SECRET || 'default_secret_key', 
+      { expiresIn: '1h' }
+    );
+
+    return res.status(201).json({
+      success: true,
+      message: "Tutor registered successfully",
+      token,
+      tutor: {
+        name: newTutor.name,
+        email: newTutor.email,
+        image: newTutor.image,
+        speciality: newTutor.speciality,
+        degree: newTutor.degree,
+        experience: newTutor.experience,
+        about: newTutor.about,
+        fees: newTutor.fees,
+        address: newTutor.address,
+      },
+    });
+
+  } catch (error) {
+    console.error("Error in addTutor:", error);
+    
+    // Clean up uploaded file on error
+    if (req.file && fs.existsSync(req.file.path)) {
+      fs.unlink(req.file.path, (err) => {
+        if (err) console.error('Error deleting uploaded file:', err);
+      });
+    }
+    
+    return res.status(500).json({ 
+      success: false, 
+      message: error.message || "Internal server error. Please try again later." 
+    });
+  }
+};
 
   const loginTutor = async (req, res) => {
     try {

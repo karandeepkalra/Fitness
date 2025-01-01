@@ -1,3 +1,386 @@
+/* .appointment-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.appointment-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .appointment-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.card-header {
+  padding: 1.5rem;
+}
+
+.card-content {
+  padding: 1.5rem;
+}
+
+.tutor-card {
+  height: fit-content;
+}
+
+.image-container {
+  position: relative;
+  width: 100%;
+  padding-top: 100%;
+}
+
+.tutor-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tutor-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 1rem;
+  color: #333;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  color: #666;
+}
+
+.icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #4a90e2;
+}
+
+.fees {
+  font-weight: 600;
+  color: #333;
+}
+
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #333;
+}
+
+.selection-section {
+  margin-bottom: 1.5rem;
+}
+
+.section-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #666;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.days-grid,
+.time-slots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 0.5rem;
+}
+
+.day-button,
+.time-slot-button {
+  padding: 0.5rem;
+  font-size: 0.875rem;
+  border-radius: 8px;
+  border: none;
+  background-color: #f3f4f6;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.day-button:hover,
+.time-slot-button:hover {
+  background-color: #e5e7eb;
+}
+
+.day-button.selected,
+.time-slot-button.selected {
+  background-color: #4a90e2;
+  color: white;
+}
+
+.book-button {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: none;
+  font-weight: 500;
+  color: white;
+  background-color: #4a90e2;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.book-button:hover:not(:disabled) {
+  background-color: #357abd;
+}
+
+.book-button:disabled {
+  background-color: #d1d5db;
+  cursor: not-allowed;
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.loading-spinner::after {
+  content: '';
+  width: 3rem;
+  height: 3rem;
+  border: 2px solid #f3f4f6;
+  border-top: 2px solid #4a90e2;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 640px) {
+  .days-grid,
+  .time-slots-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .card-header,
+  .card-content {
+    padding: 1rem;
+  }
+} */
+
+
+
+/* .appointment-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.appointment-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .appointment-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.card-header {
+  padding: 1.5rem;
+}
+
+.card-content {
+  padding: 1.5rem;
+}
+
+.tutor-card {
+  height: fit-content;
+}
+
+.image-container {
+  position: relative;
+  width: 100%;
+  padding-top: 100%;
+}
+
+.tutor-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tutor-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 1rem;
+  color: #333;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  color: #666;
+}
+
+.icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #4a90e2;
+}
+
+.fees {
+  font-weight: 600;
+  color: #333;
+}
+
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #333;
+}
+
+.selection-section {
+  margin-bottom: 1.5rem;
+}
+
+.section-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #666;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.days-grid,
+.time-slots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 0.5rem;
+}
+
+.day-button,
+.time-slot-button {
+  padding: 0.5rem;
+  font-size: 0.875rem;
+  border-radius: 8px;
+  border: none;
+  background-color: #f3f4f6;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.day-button:hover,
+.time-slot-button:hover {
+  background-color: #e5e7eb;
+}
+
+.day-button.selected,
+.time-slot-button.selected {
+  background-color: #4a90e2;
+  color: white;
+}
+
+.book-button {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: none;
+  font-weight: 500;
+  color: white;
+  background-color: #4a90e2;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.book-button:hover:not(:disabled) {
+  background-color: #357abd;
+}
+
+.book-button:disabled {
+  background-color: #d1d5db;
+  cursor: not-allowed;
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.loading-spinner::after {
+  content: '';
+  width: 3rem;
+  height: 3rem;
+  border: 2px solid #f3f4f6;
+  border-top: 2px solid #4a90e2;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 640px) {
+  .days-grid,
+  .time-slots-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .card-header,
+  .card-content {
+    padding: 1rem;
+  }
+} */
+
+
+
+
 .appointment-container {
   max-width: 1200px;
   margin: 0 auto;

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import './Tutor.css';
 import { AContext } from '../Context/AppContext';
+import MissionStatement from '../Mission/MissionStatement';
 
 const Tutors = () => {
   const { speciality } = useParams(); // Get speciality from URL params
@@ -74,9 +75,9 @@ const Tutors = () => {
               <div className="content">
                 <div style={{ position: 'relative' }}>
                   <img src={item.image} alt={item.name} />
-                  <div className="status">
+                  {/* <div className="status">
                     <p>Available</p>
-                  </div>
+                  </div> */}
                 </div>
                 <h2>{item.name}</h2>
                 <p>{item.speciality}</p>
@@ -85,6 +86,7 @@ const Tutors = () => {
           ))
         )}
       </div>
+      <MissionStatement/>
     </div>
   );
 };

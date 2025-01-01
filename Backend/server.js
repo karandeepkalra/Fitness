@@ -23,7 +23,8 @@ connectCloudinary();
 // Middleware
 app.use(express.json());
 
-app.use(cors())
+app.use(cors(),
+)
 
 // Serve files from TutorImages directory
 app.use('/TutorImages', express.static(path.join(__dirname, 'TutorImages')));

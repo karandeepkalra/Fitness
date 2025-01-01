@@ -1,6 +1,7 @@
 import React from 'react'
 import './about.css'
 import about from '../../../assets/about.webp'
+import DoctorLandingPage from '../LandingPage/DoctorLandingPage'
 
 const About = () => {
   return (
@@ -36,6 +37,9 @@ const About = () => {
                 <b>All-Inclusive:</b>
                 <p>We offer a wide range of yoga classes for all levels, from beginners to advanced practitioners, as well as wellness resources for a holistic approach to health.</p>
             </div>
+        </div>
+        <div>
+         <DoctorLandingPage/>
         </div>
     </div>
   )

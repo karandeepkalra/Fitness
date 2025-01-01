@@ -90,7 +90,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #6366f1;
+    /* background: #6366f1; */
+    background: linear-gradient(90deg, #bf81f8, #4fb7e3);
+    
     padding: 3rem 4rem;
     max-height: 420px;
 }
@@ -117,6 +119,28 @@
     color: white;
     opacity: 0.9;
     font-weight: 400;
+}
+.cta-button {
+    margin-top: 30px;
+    display: inline-block;
+    padding: 15px 40px;
+    background: #fff;
+    color: black;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: bold;
+    opacity: 0;
+    animation: fadeInUp 1s forwards 1.5s;
+    transition: transform 0.3s, background-color 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    background: #00ff88;
+   
+    box-shadow: 0 5px 15px rgba(0,255,136,0.3);
 }
 
 .banner-image-container {

@@ -1,3 +1,4 @@
+// // current working 
 // import React, { createContext, useState, useEffect } from 'react';
 // import { toast } from 'react-toastify';
 // import { data } from '../Data.js'; // Static tutor data
@@ -20,9 +21,8 @@
   
 //   const tutorsData = data; 
 //   const currencySymbol = '$';
-//   const backendUrl= import.meta.env.VITE_BACKEND_URL
-//   // const backendUrl= https://localhost:4000;
- 
+//   // const backendURL = 'http://localhost:4000';
+//   const backendURL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:4000';
 
 //   // Fetch user profile from backend
 //   const fetchData = async () => {
@@ -35,7 +35,7 @@
 //       }
 
 //       setLoading(true);
-//       const res = await fetch(`${backendUrl}/user/get-profile`, {
+//       const res = await fetch(`${backendURL}/user/get-profile`, {
 //         headers: {
 //           Authorization: `Bearer ${token}`, // Send token
 //         },
@@ -70,7 +70,7 @@
 
 //   const getAllTutors = async () => {
 //     try {
-//       const { data: res } = await axios.post(`${backendUrl}/api/tutor/all-tutors`);
+//       const { data: res } = await axios.post(`${backendURL}/api/tutor/all-tutors`);
 //       if (res.success) {
 //         setTutors(res.tutors); // Update tutors state
 //         console.log(res.tutors);
@@ -84,7 +84,7 @@
 
 //   const getTutorsData = async () => {
 //     try {
-//       const { data: res } = await axios.get(`${backendUrl}/api/tutor/list`);
+//       const { data: res } = await axios.get(`${backendURL}/api/tutor/list`);
 //       if (res.success) {
 //         setTutorsdata(res.message); // Update tutorsdata state
 //       } else {
@@ -108,7 +108,7 @@
 //     tutorsData, // Provide tutors data here
 //     loading,
 //     currencySymbol,
-//     backendUrl,
+//     backendURL,
 //     tutors,
 //     getAllTutors,
 //     getTutorsData
@@ -124,13 +124,10 @@
 
 // export default AppContext;
 
-
-// current working 
 import React, { createContext, useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { data } from '../Data.js'; // Static tutor data
-import axios from 'axios'
-
+import axios from 'axios';
 
 // Create Context
 export const AContext = createContext();
@@ -141,20 +138,18 @@ const AppContext = ({ children }) => {
     JSON.parse(localStorage.getItem('userData')) || null
   );
   const [loading, setLoading] = useState(false);
+  const [tutors, setTutors] = useState([]);
+  const [tutorsdata, setTutorsdata] = useState([]);
 
-  const [tutors,setTutors]= useState([])
-  const [tutorsdata,setTutorsdata]=  useState([])
-
-  
-  const tutorsData = data; 
+  const tutorsData = data;
   const currencySymbol = '$';
-  const backendURL = 'http://localhost:4000';
-  // const backendURL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:4000';
+  // Use Vite's environment variable syntax
+  const backendURL = import.meta.env.VITE_APP_BACKEND_URL || 'http://localhost:4000';
 
   // Fetch user profile from backend
   const fetchData = async () => {
     try {
-      const token = localStorage.getItem('token'); // Get token
+      const token = localStorage.getItem('token');
 
       if (!token) {
         console.error('No token found. User may not be logged in.');
@@ -164,7 +159,7 @@ const AppContext = ({ children }) => {
       setLoading(true);
       const res = await fetch(`${backendURL}/user/get-profile`, {
         headers: {
-          Authorization: `Bearer ${token}`, // Send token
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -172,8 +167,8 @@ const AppContext = ({ children }) => {
         const data = await res.json();
 
         if (data.userData) {
-          setUserData(data.userData); // Update userData state
-          localStorage.setItem('userData', JSON.stringify(data.userData)); // Cache data
+          setUserData(data.userData);
+          localStorage.setItem('userData', JSON.stringify(data.userData));
         } else {
           console.error('Invalid userData received:', data);
         }
@@ -188,10 +183,9 @@ const AppContext = ({ children }) => {
     }
   };
 
-  // Fetch user profile when token exists
   useEffect(() => {
     if (token) {
-      fetchData(); // Fetch profile data when token exists
+      fetchData();
     }
   }, [token]);
 
@@ -199,7 +193,7 @@ const AppContext = ({ children }) => {
     try {
       const { data: res } = await axios.post(`${backendURL}/api/tutor/all-tutors`);
       if (res.success) {
-        setTutors(res.tutors); // Update tutors state
+        setTutors(res.tutors);
         console.log(res.tutors);
       } else {
         toast.error(res.message);
@@ -213,7 +207,7 @@ const AppContext = ({ children }) => {
     try {
       const { data: res } = await axios.get(`${backendURL}/api/tutor/list`);
       if (res.success) {
-        setTutorsdata(res.message); // Update tutorsdata state
+        setTutorsdata(res.message);
       } else {
         toast.error(res.message);
       }
@@ -221,37 +215,33 @@ const AppContext = ({ children }) => {
       toast.error(error.message);
     }
   };
-  
-  
-   useEffect(()=>{
-      getTutorsData()
-   },[])
+
+  useEffect(() => {
+    getTutorsData();
+  }, []);
 
   const value = {
     token,
     setToken,
     userData,
     setUserData,
-    tutorsData, // Provide tutors data here
+    tutorsData,
     loading,
     currencySymbol,
     backendURL,
     tutors,
     getAllTutors,
-    getTutorsData
-   
+    getTutorsData,
   };
 
   return (
-  <AContext.Provider value={value}>
-    {children}
+    <AContext.Provider value={value}>
+      {children}
     </AContext.Provider>
-  )
+  );
 };
 
 export default AppContext;
-
-
 
 
 

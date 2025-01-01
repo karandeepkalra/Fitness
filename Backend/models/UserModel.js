@@ -5,8 +5,8 @@ const UserSchema=new mongoose.Schema({
     password:{type:String,required:true},
     gender:{type:String,default:"Not Selected"},
 
-    // dob:{type:String,default:"Not Selected"},
-    dob:{type:Date, default:"Not Selected"},
+    dob:{type:String,default:"Not Selected"},
+    // dob:{type:Date, default:"Not Selected"},
     phone:{type:String,default:'000000000'}
 
 })
