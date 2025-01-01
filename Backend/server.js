@@ -26,6 +26,11 @@ app.use(express.json());
 
 app.use(cors(),
 )
+app.use(cors({
+  origin: 'https://fitness-9k26.vercel.app/', // Replace with your frontend deployed URL
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 
 // Serve files from TutorImages directory
 app.use('/TutorImages', express.static(path.join(__dirname, 'TutorImages')));
